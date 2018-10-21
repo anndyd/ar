@@ -22,8 +22,8 @@
 					</Input>
 					<Label text="{i18n>atype}" />
 					<ComboBox
-						items="{assist>types}">
-						<core:Item key="{assist>key}" text="{assist>text}" />
+						items="{ path: 'assist>/types' }">
+						<core:Item key="{assist>id}" text="{assist>name}" />
 						<layoutData>
 							<l:GridData span="L2 M2 S4" />
 						</layoutData>

@@ -33,9 +33,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			var that = this;
 			var pModel = that.getView().getModel("input");
 			var itmCxt = evt.getParameters().listItem.getBindingContext();
-			pModel.setData({
-//				atype : itmCxt.getProperty("atype")
-			});
+			pModel.setData(itmCxt.getProperty());
 			pModel.refresh();
 		},
 

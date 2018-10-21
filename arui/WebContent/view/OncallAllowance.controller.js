@@ -31,7 +31,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		prepareAssetModel : function() {
 			var that = this;
 			sap.ui.core.BusyIndicator.show();
-			var aModel = this.getView().getModel();
+			var aModel = this.getView().getModel("assist");
 			ats.getAll().done(function(data) {
 				aModel.setData({
 					types: data

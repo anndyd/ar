@@ -1,0 +1,48 @@
+<core:View xmlns:core="sap.ui.core"
+	controllerName="sap.sf.ar.ui.view.UploadFile" 
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:u="sap.ui.unified" 
+	xmlns="sap.m">
+	<Page 
+		title="{i18n>uploadTitle}"
+		id="uploadPage">
+			<f:SimpleForm id="uploadForm" backgroundDesign="Solid"
+				editable="true" class="editableForm">
+				<f:content>
+					<VBox>
+						<Label text="{i18n>filename}" />
+						<u:FileUploader id="fileUploaderPm" name="filename"
+						    width="600px" buttonText="{i18n>browse}"
+							sendXHR="false" uploadUrl="/qm/upload/importpm" fileType="xls,xlsx"
+							placeholder="{i18n>uploadholderpm}"
+							tooltip="{i18n>uploadtip}" uploadComplete="handleUploadComplete" />
+		
+						<Button text="{i18n>import}" press="handleUploadPmPress">
+						</Button>
+						
+						<Label text="{i18n>filename}" />
+						<u:FileUploader id="fileUploaderSccm" name="filename"
+						    width="600px" buttonText="{i18n>browse}"
+							sendXHR="false" uploadUrl="/qm/upload/importsccm" fileType="xls,xlsx"
+							placeholder="{i18n>uploadholdersccm}"
+							tooltip="{i18n>uploadtip}" uploadComplete="handleUploadComplete" />
+		
+						<Button text="{i18n>import}" press="handleUploadSccmPress">
+						</Button>
+					</VBox>
+				</f:content>
+			</f:SimpleForm>
+
+		<footer>
+			<Bar>
+				<contentRight>
+					<!-- Button class="sapUiSmallMarginEnd" id="save" text="{i18n>save}"
+						type="Emphasized" visible="{input>editCtl}" press="onUpload" /-->
+				</contentRight>
+			</Bar>
+		</footer>
+	</Page>
+	
+	
+</core:View>

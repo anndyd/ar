@@ -1,0 +1,18 @@
+<mvc:View
+    controllerName="sap.sf.ar.ui.view.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <Page class="mainpage" backgroundDesign="Transparent"
+    	showHeader="false">
+        <TileContainer
+            id="container"
+            tiles="{/}">
+            <StandardTile
+                press="onTilePress"
+                icon="sap-icon://{icon}"
+                title="{title}"
+                info="{info}"
+                />
+        </TileContainer>
+    </Page>
+</mvc:View>

@@ -1,0 +1,191 @@
+{
+	"_version": "1.3.0",
+
+	"sap.app": {
+		"_version": "1.3.0",
+		"id": "sap.sf.ar.ui",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+
+		"applicationVersion": {
+			"version": "1.0.0"
+		}
+	},
+
+	"sap.ui": {
+		"_version": "1.3.0",
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://detail-view",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_bluecrystal"
+		]
+	},
+
+	"sap.ui5": {
+		"_version": "1.2.0",
+		"rootView": {
+			"viewName": "sap.sf.ar.ui.view.App",
+			"type": "XML",
+			"id": "app"
+		},
+
+		"dependencies": {
+			"minUI5Version": "1.56.0",
+			"libs": {
+				"sap.ui.core": {
+					"minVersion": "1.56.0"
+				},
+				"sap.m": {
+					"minVersion": "1.56.0"
+				},
+				"sap.ui.layout" : {
+					"minVersion": "1.56.0"
+				},
+				"sap.ui.unified" : {
+					"minVersion": "1.56.0"
+				}
+			}
+		},
+
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "sap.sf.ar.ui.i18n.i18n"
+				}
+			}
+		},
+
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "sap.sf.ar.ui.view",
+				"controlId": "idAppControl",
+				"controlAggregation": "detailPages",
+				"bypassed": {
+					"target": ["notFound"]
+				},
+				"async": true
+			},
+
+			"routes": [
+				{
+					"pattern": "pmsccmreport",
+					"name": "pmsccmreport",
+					"target": ["home", "pmsccmreport"]
+				},
+				{
+					"pattern": "sccmcharger",
+					"name": "sccmcharger",
+					"target": ["home", "sccmcharger"]
+				},
+				{
+					"pattern": "oncall",
+					"name": "oncall",
+					"target": ["home", "oncall"]
+				},
+				{
+					"pattern": "atype",
+					"name": "atype",
+					"target": ["home", "atype"]
+				},
+				{
+					"pattern": "upload",
+					"name": "upload",
+					"target": ["home", "upload"]
+				},
+				{
+					"pattern": "user",
+					"name": "user",
+					"target": ["home", "user"]
+				},
+                {
+                    "pattern": ["main",""],
+                    "name": "main",
+                    "target": ["home", "main"]
+				},
+                {
+                    "pattern": "unavailable",
+                    "name": "unavailable",
+                    "target": ["home", "unavailable"]
+                }
+			],
+
+			"targets": {
+				"pmsccmreport": {
+					"viewName": "PmSccmReport",
+					"viewLevel": 1,
+					
+					"controlAggregation": "detailPages"
+				},
+				"oncall": {
+					"viewName": "OncallAllowance",
+					"viewLevel": 1,
+					
+					"controlAggregation": "detailPages"
+				},
+				"atype": {
+					"viewName": "AllowanceType",
+					"viewLevel": 1,
+					
+					"controlAggregation": "detailPages"
+				},
+				"user": {
+					"viewName": "User",
+					"viewLevel": 1,
+					
+					"controlAggregation": "detailPages"
+				},
+				"upload": {
+					"viewName": "UploadFile",
+					"viewLevel": 1,
+					
+					"controlAggregation": "detailPages"
+				},
+				"home": {
+					"viewName": "Home",
+					"viewLevel": 1,
+					
+					"controlAggregation": "masterPages"
+				},
+				"main": {
+					"viewName": "Main",
+					"viewLevel": 1,
+					
+					"controlAggregation": "detailPages"
+				},
+				"notFound": {
+					"viewPath": "sap.sf.ar.ui.view.base",
+					"viewName": "NotFound",
+					"viewId": "notFound"
+				},
+				"unavailable": {
+					"viewPath": "sap.sf.ar.ui.view.base",
+					"viewName": "Unavailable",
+					"viewId": "Unavailable"
+				}
+			}
+		}
+	}
+}

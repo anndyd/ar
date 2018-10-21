@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The contents of this file will be loaded for each web application --><Context>
+    <!-- Default set of monitored resources. If one of these changes, the    -->
+	<Resource name="arDataSourceJNDI" auth="Container"
+              factory="com.zaxxer.hikari.HikariJNDIFactory"
+              dataSourceClassName="org.mariadb.jdbc.MariaDbDataSource"
+              type="javax.sql.DataSource"
+              minimumIdle="5" 
+              maximumPoolSize="10"
+              connectionTimeout="10000"
+              username="root"
+              password="Sybase123"
+              dataSource.url="jdbc:mariadb://pekitwin2008vm.pek.sap.corp:3306/ar"
+              
+    />
+    <!-- web application will be reloaded.                                   -->
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <!--
+    <Manager pathname="" />
+    -->
+
+</Context>

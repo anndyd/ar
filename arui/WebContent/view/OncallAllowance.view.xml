@@ -1,0 +1,185 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+		xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+		controllerName="sap.sf.ar.ui.view.OncallAllowance" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{i18n>oncallAllowanceTitle}">
+		<VBox>
+			<f:SimpleForm id="oncallAllowanceForm" minWidth="1024" backgroundDesign="Solid"
+				maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
+				labelSpanL="4" labelSpanM="4" emptySpanL="1" emptySpanM="1"
+				columnsL="1" columnsM="1" class="editableForm">
+				<f:content>
+					<Label text="{i18n>iNumber}" />
+					<Input value="{input>iNumber}" type="Text" editable="false">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>empName}" />
+					<Input value="{input>empName}" type="Text" editable="false">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>atype}" />
+					<ComboBox
+						items="{assist>types}">
+						<core:Item key="{assist>key}" text="{assist>text}" />
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</ComboBox>
+					<Label text="{i18n>customerSite}" />
+					<CheckBox selected="{input>customerSite}" text="{i18n>yes}">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</CheckBox>
+					<Label text="{i18n>oncallPeriod}" />
+					<DatePicker
+						id="DP1"
+						value="{assist>dateFrom}"
+						valueFormat="yyyy-MM-dd" displayFormat="short"
+						placeholder="{i18n>from}"
+						class="sapUiSmallMarginBottom">
+						<layoutData>
+							<l:GridData span="L2 M3 S4" />
+						</layoutData>
+					</DatePicker>	
+					<DatePicker
+						id="DP2"
+						value="{assist>dateTo}"
+						valueFormat="yyyy-MM-dd" displayFormat="short"
+						placeholder="{i18n>to}"
+						class="sapUiSmallMarginBottom">
+						<layoutData>
+							<l:GridData span="L2 M3 S4" />
+						</layoutData>
+					</DatePicker>
+					<Button class="sapUiSmallMarginEnd" text="{i18n>generate}" icon="sap-icon://refresh"
+						visible="true" press="handleGenerate" width="10em">
+					</Button>
+
+					<Label text="{i18n>oncallDate}" />
+					<DatePicker
+						id="DP3"
+						value="{input>oncallDate}"
+						valueFormat="yyyy-MM-dd" displayFormat="short"
+						placeholder=""
+						class="sapUiSmallMarginBottom">
+						<layoutData>
+							<l:GridData span="L2 M3 S4" />
+						</layoutData>
+					</DatePicker>
+					<Label text="{i18n>period}" />
+					<TimePicker
+							id="TP1"
+							value="{input>startTime}"
+							valueFormat="HH:mm"
+							displayFormat="HH:mm"
+							placeholder="{i18n>start}">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</TimePicker>
+					<TimePicker
+							id="TP2"
+							value="{input>endTime}"
+							valueFormat="HH:mm"
+							displayFormat="HH:mm"
+							placeholder="{i18n>end}">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</TimePicker>
+					<Label text="{i18n>oncallHours}" />
+					<Input value="{input>oncallHours}" type="Text" editable="true">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>allowance}" />
+					<Input value="{input>otPaymentBase}" type="Text" editable="false">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>remark}" />
+					<Input value="{input>remark}" type="Text" editable="true">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+
+				</f:content>
+			</f:SimpleForm>
+			</VBox>
+			<Table id="idOncallAllowancelist" inset="false"
+				backgroundDesign="Solid"
+				growing="true" growingScrollToLoad="true"
+				items="{
+					path: '/'
+				}"
+				itemPress="onTablePress"
+			>
+				<columns>
+					<Column id="iNumber" width="8em">
+						<Text text="{i18n>iNumber}" />
+					</Column>
+					<Column id="empName">
+						<Text text="{i18n>empName}" />
+					</Column>
+					<Column id="atype">
+						<Text text="{i18n>atype}" />
+					</Column>
+					<Column id="customerSite">
+						<Text text="{i18n>customerSite}" />
+					</Column>
+					<Column id="oncallDate">
+						<Text text="{i18n>oncallDate}" />
+					</Column>
+					<Column id="startTime">
+						<Text text="{i18n>startTime}" />
+					</Column>
+					<Column id="endTime">
+						<Text text="{i18n>endTime}" />
+					</Column>
+					<Column id="oncallHours">
+						<Text text="{i18n>oncallHours}" />
+					</Column>
+					<Column id="allowance">
+						<Text text="{i18n>allowance}" />
+					</Column>
+					<Column id="remark">
+						<Text text="{i18n>remark}" />
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Active">
+						<cells>
+							<ObjectIdentifier text="{iNumber}" />
+							<Text text="{empName}" />
+							<Text text="{type}" />
+							<Text text="{customerSite}" />
+							<Text text="{oncallDate}" />
+							<Text text="{startTime}" />
+							<Text text="{endTime}" />
+							<ObjectNumber number="{oncallHours}"/>
+							<ObjectNumber number="{allowance}"/>
+							<Text text="{remark}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+	
+			<footer>
+				<Bar>
+					<contentRight>
+						<Button class="sapUiSmallMarginEnd" id="add" text="{i18n>add}"
+							type="Accept"  press="handleAddPress" />
+						<Button class="sapUiSmallMarginEnd" id="save" text="{i18n>save}"
+							type="Emphasized" press="handleSavePress" />
+					</contentRight>
+				</Bar>
+			</footer>
+	</Page>
+</core:View>

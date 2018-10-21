@@ -1,0 +1,124 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+		xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+		controllerName="sap.sf.ar.ui.view.AllowanceType" xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{i18n>allowanceTypeTitle}">
+		<VBox>
+			<f:SimpleForm id="allowanceTypeForm" minWidth="1024" backgroundDesign="Solid"
+				maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
+				labelSpanL="4" labelSpanM="4" emptySpanL="1" emptySpanM="1"
+				columnsL="1" columnsM="1" class="editableForm">
+				<f:content>
+					<Label text="{i18n>atype}" />
+					<Input value="{input>name}" type="Text" editable="true">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>timeType}" />
+					<Input value="{input>timeType}" type="Text" editable="true">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>oncallSubsidyUnit}" />
+					<Input value="{input>oncallSubsidyUnit}" type="Text" editable="true">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>oncallCustomerSiteYes}" />
+					<Input value="{input>oncallCustomerSiteYes}" type="Text" editable="true">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>oncallCustomerSiteNo}" />
+					<Input value="{input>oncallCustomerSiteNo}" type="Text" editable="true">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>otPaymentMultiplier}" />
+					<Input value="{input>otPaymentMultiplier}" type="Text" editable="true">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>otPaymentBase}" />
+					<Input value="{input>otPaymentBase}" type="Text" editable="true">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>memo}" />
+					<Input value="{input>memo}" type="Text" editable="true">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+
+				</f:content>
+			</f:SimpleForm>
+			</VBox>
+			<Table id="idAllowanceTypelist" inset="false"
+				backgroundDesign="Solid"
+				growing="true" growingScrollToLoad="true"
+				items="{
+					path: '/'
+				}"
+				itemPress="onTablePress"
+			>
+				<columns>
+					<Column id="atype" width="8em">
+						<Text text="{i18n>atype}" />
+					</Column>
+					<Column id="timeType">
+						<Text text="{i18n>timeType}" />
+					</Column>
+					<Column id="oncallSubsidyUnit">
+						<Text text="{i18n>oncallSubsidyUnit}" />
+					</Column>
+					<Column id="oncallCustomerSiteYes">
+						<Text text="{i18n>oncallCustomerSiteYes}" />
+					</Column>
+					<Column id="oncallCustomerSiteNo">
+						<Text text="{i18n>oncallCustomerSiteNo}" />
+					</Column>
+					<Column id="otPaymentMultiplier">
+						<Text text="{i18n>otPaymentMultiplier}" />
+					</Column>
+					<Column id="otPaymentBase">
+						<Text text="{i18n>otPaymentBase}" />
+					</Column>
+					<Column id="memo">
+						<Text text="{i18n>memo}" />
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Active">
+						<cells>
+							<ObjectIdentifier text="{name}" />
+							<Text text="{timeType}" />
+							<Text text="{oncallSubsidyUnit}" />
+							<ObjectNumber number="{oncallCustomerSiteYes}"/>
+							<ObjectNumber number="{oncallCustomerSiteNo}"/>
+							<ObjectNumber number="{otPaymentMultiplier}"/>
+							<ObjectNumber number="{otPaymentBase}"/>
+							<Text text="{memo}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+	
+			<footer>
+				<Bar>
+					<contentRight>
+						<Button class="sapUiSmallMarginEnd" id="add" text="{i18n>add}"
+							type="Accept"  press="handleAddPress" />
+						<Button class="sapUiSmallMarginEnd" id="save" text="{i18n>save}"
+							type="Emphasized" press="handleSavePress" />
+					</contentRight>
+				</Bar>
+			</footer>
+	</Page>
+</core:View>

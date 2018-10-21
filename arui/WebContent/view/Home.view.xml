@@ -1,0 +1,51 @@
+<mvc:View 
+        controllerName="sap.sf.ar.ui.view.Home" 
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.tnt"
+        xmlns:m="sap.m">
+	<m:Page backgroundDesign="List"
+            id="page"
+            title="{masterView>/title}"
+            showNavButton="false">
+        <m:customHeader>
+            <m:Bar id="headerBar">
+                <!--m:contentLeft>
+                    <m:Button text="Collapse/Exapand"
+                  icon="sap-icon://menu2"
+                  press="onCollapseExapandPress" />
+                </m:contentLeft-->
+                <m:contentMiddle>
+                    <m:Label text="{i18n>appTitle}" />
+                </m:contentMiddle>
+            </m:Bar>
+        </m:customHeader>
+        <m:content>
+		    <NavigationList id="navigationList" 
+		          itemSelect="onSelectItem">
+	            <!--NavigationListItem 
+	            	text="{i18n>atype}" 
+	            	icon="sap-icon://manager-insight" 
+	            	key="sccmreport" class="menu">
+	            </NavigationListItem-->
+	            <NavigationListItem 
+	            	text="{i18n>oncallAllowance}" 
+	            	icon="sap-icon://activity-items" 
+	            	key="oncall" class="menu">
+	            </NavigationListItem>
+	            <NavigationListItem 
+	            	text="{i18n>atype}" 
+	            	icon="sap-icon://activity-individual" 
+	            	key="atype" class="menu">
+	            </NavigationListItem>
+	            <!-- NavigationListItem 
+	            		text="{i18n>upload}"
+	            		icon="sap-icon://upload" key="upload">
+	            </NavigationListItem-->
+	            <NavigationListItem 
+	            		text="{i18n>userTitle}"
+	            		icon="sap-icon://user-settings" key="user">
+	            </NavigationListItem>
+		    </NavigationList>
+		</m:content>
+	</m:Page>
+</mvc:View>

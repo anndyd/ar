@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>SAP on call allowance request</title>
+
+	<link rel="icon" href="./image/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="./image/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet/less" type="text/css" href="./css/style.less"/>
+	
+	<script type="text/javascript" src="libs/less.min.js"></script>
+	<script type="text/javascript" src="js/util.js"></script>
+	<!-- Bootstrapping UI5 -->
+	<script id="sap-ui-bootstrap"
+			src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+			data-sap-ui-libs="sap.m"
+			data-sap-ui-theme="sap_bluecrystal"
+			data-sap-ui-compatVersion="edge"
+			data-sap-ui-resourceroots='{"sap.sf.ar.ui": "."}'
+			data-sap-ui-frameOptions="trusted">
+	</script>
+
+	<script>
+		sap.ui.getCore().attachInit(function () {
+			sap.ui.require([
+				"sap/m/Shell",
+				"sap/ui/core/ComponentContainer",
+				"sap/ui/core/IconPool",
+				"sap/ui/unified/ShellHeadItem",
+				"sap/ui/unified/ShellHeadUserItem"
+			], function (Shell, ComponentContainer, IconPool, ShellHeadItem, ShellHeadUserItem) {
+				var userName = "Anndy";
+				  var login = function() {
+						var url = "/ar/user/active";
+						$.ajax({
+						    url: url,
+						    type: 'POST',
+						    async: false
+						}).done(function(data){
+							if (data && !data.error) {
+							    util.sessionInfo = data;
+							    userName = util.sessionInfo.userFullName;
+							} else {
+								alert("You don't have permission to access!", {styleClass: "srMessageBoxStyle srMessageBoxError"});
+							}
+						});
+				  };
+		        var oMyShell = new Shell('my_shell',{
+		            title: "Allowance request []",
+		            showLogout: false,
+		            appWidthLimited: false,
+		            app: new ComponentContainer({
+		                name: 'sap.sf.ar.ui'
+		            })
+		        });
+		        var oHomeShell = new sap.ui.unified.Shell("main_shell", {
+		            icon: "image/sap_logo.png",
+		            headItems: [
+		                new ShellHeadItem({
+		                    icon: sap.ui.core.IconPool.getIconURI("home"),
+		                    visible: true,
+		                    id: "homebtn",
+		                    press: function() {
+		                        window.location.hash = "main"
+		                    }
+		                })
+		            ],
+		            user: [
+		                new sap.ui.unified.ShellHeadUserItem("shell_head_user", {
+		                	image: "sap-icon://person-placeholder",
+		                	username: userName,
+		                    showPopupIndicator: false
+		                })
+		            ],
+		            content: [
+		                oMyShell
+		            ]
+		        });
+		        login();
+		        if (userName && userName !== "") {
+			        oHomeShell.getUser().mProperties.username = userName;
+			        oHomeShell.placeAt('content');
+		        }
+			});
+		});
+	</script>
+
+</head>
+
+<!-- UI Content -->
+<body class="sapUiBody" id="content">
+</body>
+</html>

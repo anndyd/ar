@@ -155,7 +155,8 @@ public class UserController {
     		usrId = name;
     		usrFullName = usr.getFullName();
     		usrRole = usr.getRole();
-    		rlt.setUserFullName(usrFullName != null && usrFullName.length() > 0 ? 
+    		rlt.setUserFullName(usrFullName);
+    		rlt.setUserDisplayName(usrFullName != null && usrFullName.length() > 0 ? 
     				name + " (" + usrFullName + ")" : name);
     		rlt.setCurrentUser(usrId);
     		rlt.setRole(usrRole);

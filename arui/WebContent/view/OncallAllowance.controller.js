@@ -8,6 +8,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 	"use strict";
 	var oas = new OncallAllowanceService();
 	var ats = new AllowanceTypeService();
+	
 	return BaseController.extend("sap.sf.ar.ui.view.OncallAllowance", {
 		onInit : function(oEvent) {
 			var that = this;
@@ -15,7 +16,8 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			var pModel = new JSONModel();
 			var aModel = new JSONModel();
 			pModel.setData({
-				roleCtl : false
+				iNumber : util.sessionInfo.currentUser,
+				empName : util.sessionInfo.userFullName
 			});
 			aModel.setData({
 				types: []
@@ -33,10 +35,18 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			sap.ui.core.BusyIndicator.show();
 			var aModel = this.getView().getModel("assist");
 			ats.getAll().done(function(data) {
+				var ata = [];
+				if (data && data.length > 0) {
+					data.forEach(function(v) {
+						ata[v.id] = v.name;
+					});
+				}
 				aModel.setData({
-					types: data
+					types: data,
+					aTypes: ata
 				});
 				aModel.refresh();
+				
 			});
 		},
 
@@ -44,6 +54,14 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			
 		},
 		
+		handleTimeChange : function(evt) {
+			var that = this;
+			var pModel = that.getView().getModel("input");
+			var pData = pModel.getData();
+//			pData.oncallHours = pData.endTime - pData.startTime;
+			
+		},
+			
 		refreshTable : function() {
 			sap.ui.core.BusyIndicator.show();
 			var oModel = this.getView().getModel();
@@ -57,9 +75,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			var that = this;
 			var pModel = that.getView().getModel("input");
 			var itmCxt = evt.getParameters().listItem.getBindingContext();
-			pModel.setData({
-//				atype : itmCxt.getProperty("atype")
-			});
+			pModel.setData(itmCxt.getProperty());
 			pModel.refresh();
 		},
 
@@ -76,11 +92,11 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 
 		handleSavePress : function() {
 			var that = this;
-			ats.upsert(that.getView().getModel("input").getData()).done(
+			oas.upsert(that.getView().getModel("input").getData()).done(
 				function() {
 					that.refreshTable();
 					MessageToast.show(that.getResourceBundle().getText(
-							"updateUserS"));
+							"updateOncallAllowanceS"));
 				}
 			);
 		}

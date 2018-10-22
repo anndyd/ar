@@ -4,6 +4,7 @@ public class SessionInfo {
 	private String role;
 	private String currentUser;
 	private String userFullName;
+	private String userDisplayName;
 	private String error;
 	
 	public String getRole() {
@@ -23,6 +24,12 @@ public class SessionInfo {
 	}
 	public void setUserFullName(String userFullName) {
 		this.userFullName = userFullName;
+	}
+	public String getUserDisplayName() {
+		return userDisplayName;
+	}
+	public void setUserDisplayName(String userDisplayName) {
+		this.userDisplayName = userDisplayName;
 	}
 	public String getError() {
 		return error;

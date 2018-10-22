@@ -54,7 +54,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 				function() {
 					that.refreshTable();
 					MessageToast.show(that.getResourceBundle().getText(
-							"updateUserS"));
+							"updateAllowanceTypeS"));
 				}
 			);
 		}

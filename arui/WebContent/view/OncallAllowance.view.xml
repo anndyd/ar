@@ -9,13 +9,13 @@
 				columnsL="1" columnsM="1" class="editableForm">
 				<f:content>
 					<Label text="{i18n>iNumber}" />
-					<Input value="{input>iNumber}" type="Text" editable="false">
+					<Input value="{input>iNumber}" type="Text" enabled="false">
 						<layoutData>
 							<l:GridData span="L2 M2 S4" />
 						</layoutData>
 					</Input>
 					<Label text="{i18n>empName}" />
-					<Input value="{input>empName}" type="Text" editable="false">
+					<Input value="{input>empName}" type="Text" enabled="false">
 						<layoutData>
 							<l:GridData span="L2 M2 S4" />
 						</layoutData>
@@ -74,6 +74,7 @@
 					<TimePicker
 							id="TP1"
 							value="{input>startTime}"
+							change="handleTimeChange"
 							valueFormat="HH:mm"
 							displayFormat="HH:mm"
 							placeholder="{i18n>start}">
@@ -84,6 +85,7 @@
 					<TimePicker
 							id="TP2"
 							value="{input>endTime}"
+							change="handleTimeChange"
 							valueFormat="HH:mm"
 							displayFormat="HH:mm"
 							placeholder="{i18n>end}">
@@ -92,19 +94,19 @@
 						</layoutData>
 					</TimePicker>
 					<Label text="{i18n>oncallHours}" />
-					<Input value="{input>oncallHours}" type="Text" editable="true">
+					<Input value="{input>oncallHours}" type="Text" enabled="false">
 						<layoutData>
 							<l:GridData span="L2 M2 S4" />
 						</layoutData>
 					</Input>
 					<Label text="{i18n>allowance}" />
-					<Input value="{input>otPaymentBase}" type="Text" editable="false">
+					<Input value="{input>otPaymentBase}" type="Text" enabled="false">
 						<layoutData>
 							<l:GridData span="L2 M2 S4" />
 						</layoutData>
 					</Input>
 					<Label text="{i18n>remark}" />
-					<Input value="{input>remark}" type="Text" editable="true">
+					<Input value="{input>remark}" type="Text">
 						<layoutData>
 							<l:GridData span="L2 M2 S4" />
 						</layoutData>
@@ -158,8 +160,11 @@
 						<cells>
 							<ObjectIdentifier text="{iNumber}" />
 							<Text text="{empName}" />
-							<Text text="{type}" />
-							<Text text="{customerSite}" />
+							<Text text="{assist>aTypes}[{type}]" />
+							<Text text="{
+								path: 'customerSite',
+								formatter: 'sap.sf.ar.ui.js.Formatter.yesNo'
+							}" />
 							<Text text="{oncallDate}" />
 							<Text text="{startTime}" />
 							<Text text="{endTime}" />

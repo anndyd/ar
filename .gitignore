@@ -4,8 +4,6 @@
 **/.externalToolBuilders
 **/dependency-reduced-pom.xml
 **/.settings
-**/.classpath
-**/.project
 **/javaw_*.log
 **/.iml
 **/.externalToolBuilders

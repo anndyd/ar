@@ -21,7 +21,7 @@
 						</layoutData>
 					</Input>
 					<Label text="{i18n>atype}" />
-					<ComboBox
+					<ComboBox selectedKey="{input>type}"
 						items="{ path: 'assist>/types' }">
 						<core:Item key="{assist>id}" text="{assist>name}" />
 						<layoutData>
@@ -62,7 +62,7 @@
 					<Label text="{i18n>oncallDate}" />
 					<DatePicker
 						id="DP3"
-						value="{input>oncallDate}"
+						value="{path: 'input>oncallDate', type:'sap.ui.model.type.Date'}"
 						valueFormat="yyyy-MM-dd" displayFormat="short"
 						placeholder=""
 						class="sapUiSmallMarginBottom">
@@ -73,7 +73,7 @@
 					<Label text="{i18n>period}" />
 					<TimePicker
 							id="TP1"
-							value="{input>startTime}"
+							value="{path: 'input>startTime', type:'sap.ui.model.type.Time'}"
 							change="handleTimeChange"
 							valueFormat="HH:mm"
 							displayFormat="HH:mm"
@@ -84,7 +84,7 @@
 					</TimePicker>
 					<TimePicker
 							id="TP2"
-							value="{input>endTime}"
+							value="{path: 'input>endTime', type:'sap.ui.model.type.Time'}"
 							change="handleTimeChange"
 							valueFormat="HH:mm"
 							displayFormat="HH:mm"
@@ -171,6 +171,8 @@
 							<ObjectNumber number="{oncallHours}"/>
 							<ObjectNumber number="{allowance}"/>
 							<Text text="{remark}"/>
+							<Button id="delete" icon="sap-icon://delete" width="18px"
+								visible="true" press="handleDelete"/>
 						</cells>
 					</ColumnListItem>
 				</items>

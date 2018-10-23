@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class OncallAllowance implements Serializable {
 
@@ -30,10 +32,13 @@ public class OncallAllowance implements Serializable {
     
     private Boolean customerSite;
     
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private Date oncallDate;
     
+    @DateTimeFormat(pattern = "HH:mm")
     private Time startTime;
     
+    @DateTimeFormat(pattern = "HH:mm")
     private Time endTime;
     
     private BigDecimal oncallHours;

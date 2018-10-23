@@ -36,8 +36,10 @@ public class OncallAllowanceController {
 	@RequestMapping(value="/upsert", method = RequestMethod.POST)
 	@ResponseBody
 	@Transactional
-	public void upsertUser(@RequestBody OncallAllowance type){
-		service.upsert(type);
+	public void upsertUser(@RequestBody OncallAllowance allowance){
+		service.upsert(allowance);
+//	public void upsertUser(@RequestBody OnCallA type){
+//		LOGGER.info(type);
 	}
 	
 	@RequestMapping(value="/delete", method = RequestMethod.DELETE)

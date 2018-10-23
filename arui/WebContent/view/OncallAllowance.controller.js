@@ -78,6 +78,10 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			pModel.setData(itmCxt.getProperty());
 			pModel.refresh();
 		},
+		
+		handleDelete : function(evt) {
+			var that = this;
+		},
 
 		onExit : function() {
 		},
@@ -85,8 +89,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		handleAddPress : function() {
 			var that = this;
 			var pModel = that.getView().getModel("input");
-			pModel.setData({
-			});
+			pModel.setData({});
 			pModel.refresh();
 		},
 

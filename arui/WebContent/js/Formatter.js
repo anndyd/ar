@@ -27,6 +27,14 @@ sap.ui.define([
 			} catch (err) {
 				return "None";
 			}
+		},
+		getAllowanceType : function (types, type) {
+			if (types && type) {
+				return types[type];
+			} else {
+				return "";
+			}
+			
 		}
 	};
 

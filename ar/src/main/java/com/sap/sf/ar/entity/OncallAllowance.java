@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class OncallAllowance implements Serializable {
@@ -32,14 +36,13 @@ public class OncallAllowance implements Serializable {
     
     private Boolean customerSite;
     
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date oncallDate;
     
-    @DateTimeFormat(pattern = "HH:mm")
-    private Time startTime;
+    private String startTime;
     
-    @DateTimeFormat(pattern = "HH:mm")
-    private Time endTime;
+    private String endTime;
     
     private BigDecimal oncallHours;
     
@@ -106,19 +109,19 @@ public class OncallAllowance implements Serializable {
 		this.oncallDate = oncallDate;
 	}
 
-	public Time getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Time startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Time getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Time endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
 

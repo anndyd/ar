@@ -1,5 +1,6 @@
 <core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
 		xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+		xmlns:t="sap.ui.table"
 		controllerName="sap.sf.ar.ui.view.OncallAllowance" xmlns:html="http://www.w3.org/1999/xhtml">
 	<Page title="{i18n>oncallAllowanceTitle}">
 		<VBox>
@@ -62,7 +63,7 @@
 					<Label text="{i18n>oncallDate}" />
 					<DatePicker
 						id="DP3"
-						value="{path: 'input>oncallDate', type:'sap.ui.model.type.Date'}"
+						value="{path: 'input>oncallDate'}"
 						valueFormat="yyyy-MM-dd" displayFormat="short"
 						placeholder=""
 						class="sapUiSmallMarginBottom">
@@ -73,7 +74,7 @@
 					<Label text="{i18n>period}" />
 					<TimePicker
 							id="TP1"
-							value="{path: 'input>startTime', type:'sap.ui.model.type.Time'}"
+							value="{path: 'input>startTime'}"
 							change="handleTimeChange"
 							valueFormat="HH:mm"
 							displayFormat="HH:mm"
@@ -84,7 +85,7 @@
 					</TimePicker>
 					<TimePicker
 							id="TP2"
-							value="{path: 'input>endTime', type:'sap.ui.model.type.Time'}"
+							value="{path: 'input>endTime'}"
 							change="handleTimeChange"
 							valueFormat="HH:mm"
 							displayFormat="HH:mm"
@@ -118,10 +119,12 @@
 			<Table id="idOncallAllowancelist" inset="false"
 				backgroundDesign="Solid"
 				growing="true" growingScrollToLoad="true"
+				mode="Delete"
 				items="{
 					path: '/'
 				}"
 				itemPress="onTablePress"
+				delete="handleDelete"
 			>
 				<columns>
 					<Column id="iNumber" width="8em">
@@ -160,7 +163,10 @@
 						<cells>
 							<ObjectIdentifier text="{iNumber}" />
 							<Text text="{empName}" />
-							<Text text="{assist>aTypes}[{type}]" />
+							<Text text="{
+								parts: ['assist>aTypes', 'type'],
+								formatter: 'sap.sf.ar.ui.js.Formatter.getAllowanceType'
+							}" />
 							<Text text="{
 								path: 'customerSite',
 								formatter: 'sap.sf.ar.ui.js.Formatter.yesNo'
@@ -171,8 +177,6 @@
 							<ObjectNumber number="{oncallHours}"/>
 							<ObjectNumber number="{allowance}"/>
 							<Text text="{remark}"/>
-							<Button id="delete" icon="sap-icon://delete" width="18px"
-								visible="true" press="handleDelete"/>
 						</cells>
 					</ColumnListItem>
 				</items>

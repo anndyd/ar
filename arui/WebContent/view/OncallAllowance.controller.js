@@ -28,6 +28,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			that.getView().bindElement("input>/");
 			that.getView().bindElement("assist>/");
 			that.prepareAssetModel();
+			that.refreshTable();
 		},
 		
 		prepareAssetModel : function() {
@@ -65,7 +66,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		refreshTable : function() {
 			sap.ui.core.BusyIndicator.show();
 			var oModel = this.getView().getModel();
-			ats.getAll().done(function(data) {
+			oas.getAll().done(function(data) {
 				oModel.setData(data);
 				oModel.refresh();
 			});
@@ -80,7 +81,10 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		},
 		
 		handleDelete : function(evt) {
-			var that = this;
+			var sPath = evt.getParameters().listItem.getBindingContext().getPath();
+			var idx = sPath.match(/\d+/g)[0];
+			this.getModel().getData().splice(idx,1);
+			this.getModel().refresh();
 		},
 
 		onExit : function() {

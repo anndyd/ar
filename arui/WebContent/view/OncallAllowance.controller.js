@@ -39,7 +39,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 				var ata = [];
 				if (data && data.length > 0) {
 					data.forEach(function(v) {
-						ata[v.id] = v.name;
+						ata[v.id] = v;
 					});
 				}
 				aModel.setData({
@@ -59,7 +59,13 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			var that = this;
 			var pModel = that.getView().getModel("input");
 			var pData = pModel.getData();
-//			pData.oncallHours = pData.endTime - pData.startTime;
+			var dt = util.timeDifference(pData.startTime, pData.endTime);
+			if (dt > 0) {
+				pData.oncallHours = dt;
+			} else {
+				MessageToast.show(that.getResourceBundle().getText(
+				"endTimeMustGreatThenStartTimeErr"));
+			}
 			
 		},
 			
@@ -106,7 +112,18 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 							"updateOncallAllowanceS"));
 				}
 			);
+		},
+		
+		getAllowance : function() {
+			var that = this;
+			var pModel = that.getView().getModel("input");
+			var pData = pModel.getData();
+			var aModel = that.getView().getModel("assist");
+			var aData = aModel.getData();
+			var tAllowance = pData.customerSite ? 
+					aData.aTypes[pData.type].oncallCustomerSiteYes : aData.aTypes[pData.type].oncallCustomerSiteNo;
+			pData.allowance = tAllowance * pData.oncallHours;
+			pModel.refresh();
 		}
-
 	});
 });

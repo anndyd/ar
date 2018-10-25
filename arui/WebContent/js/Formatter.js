@@ -30,7 +30,7 @@ sap.ui.define([
 		},
 		getAllowanceType : function (types, type) {
 			if (types && type) {
-				return types[type];
+				return types[type].name;
 			} else {
 				return "";
 			}

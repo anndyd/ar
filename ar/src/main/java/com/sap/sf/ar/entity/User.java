@@ -23,7 +23,23 @@ public class User implements Serializable {
     
     private String password;
     
+    /**
+     * 0- normal employee
+     * 1- admin
+     * 2- manager
+     * 3- TA
+     * 4- HR
+     */
     private String role;
+    
+    private String manager;
+    
+    private String costCenter;
+    
+    /**
+     * multiple cost center should be splitted with comma (,)
+     */
+    private String chargedCostCenter;
     
     private String remark;
     
@@ -76,6 +92,30 @@ public class User implements Serializable {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getManager() {
+		return manager;
+	}
+
+	public void setManager(String manager) {
+		this.manager = manager;
+	}
+
+	public String getCostCenter() {
+		return costCenter;
+	}
+
+	public void setCostCenter(String costCenter) {
+		this.costCenter = costCenter;
+	}
+
+	public String getChargedCostCenter() {
+		return chargedCostCenter;
+	}
+
+	public void setChargedCostCenter(String chargedCostCenter) {
+		this.chargedCostCenter = chargedCostCenter;
 	}
 
 	public String getRemark() {

@@ -96,9 +96,9 @@
 					"target": ["home", "pmsccmreport"]
 				},
 				{
-					"pattern": "sccmcharger",
-					"name": "sccmcharger",
-					"target": ["home", "sccmcharger"]
+					"pattern": "manager",
+					"name": "manager",
+					"target": ["manager", "managerdetail"]
 				},
 				{
 					"pattern": "oncall",
@@ -133,8 +133,14 @@
 			],
 
 			"targets": {
-				"pmsccmreport": {
-					"viewName": "PmSccmReport",
+				"manager": {
+					"viewName": "AllowanceMaster",
+					"viewLevel": 1,
+					
+					"controlAggregation": "masterPages"
+				},
+				"managerdetail": {
+					"viewName": "AllowanceDetail",
 					"viewLevel": 1,
 					
 					"controlAggregation": "detailPages"

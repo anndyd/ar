@@ -93,6 +93,14 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			this.getModel().refresh();
 		},
 
+		handleCbChange : function(evt) {
+			this.getAllowance();
+		},
+
+		handleInputChange : function(evt) {
+			this.getAllowance();
+		},
+		
 		onExit : function() {
 		},
 

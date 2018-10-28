@@ -28,18 +28,48 @@ public class OncallAllowanceController {
 	@RequestMapping(value="/all", method = RequestMethod.GET)
 	@ResponseBody
 	@Transactional(readOnly = true)
-	public List<OncallAllowance> getUsers(){
-		List<OncallAllowance> types = service.getAll();
-		return types;
+	public List<OncallAllowance> getAll(){
+		List<OncallAllowance> objs = service.getAll();
+		return objs;
+	}
+
+	@RequestMapping(value="/allbystatus", method = RequestMethod.GET)
+	@ResponseBody
+	@Transactional(readOnly = true)
+	public List<OncallAllowance> getAll(@RequestParam int status){
+		List<OncallAllowance> objs = service.getByStatus(status);
+		return objs;
+	}
+
+	@RequestMapping(value="/allbynameandstatus", method = RequestMethod.GET)
+	@ResponseBody
+	@Transactional(readOnly = true)
+	public List<OncallAllowance> findAll(@RequestParam String iNumber, @RequestParam int status){
+		List<OncallAllowance> objs = service.getByUsernameAndStatus(iNumber, status);
+		return objs;
+	}
+
+	@RequestMapping(value="/allbycost", method = RequestMethod.GET)
+	@ResponseBody
+	@Transactional(readOnly = true)
+	public List<OncallAllowance> getAllbyCost(@RequestParam String costCenter, @RequestParam int status){
+		List<OncallAllowance> objs = service.getByCostCenter(costCenter, status);
+		return objs;
+	}
+
+	@RequestMapping(value="/allbymanager", method = RequestMethod.GET)
+	@ResponseBody
+	@Transactional(readOnly = true)
+	public List<OncallAllowance> getAllbyManager(@RequestParam String iNumber){
+		List<OncallAllowance> objs = service.getByManage(iNumber);
+		return objs;
 	}
 	
 	@RequestMapping(value="/upsert", method = RequestMethod.POST)
 	@ResponseBody
 	@Transactional
-	public void upsertUser(@RequestBody OncallAllowance allowance){
+	public void upsert(@RequestBody OncallAllowance allowance){
 		service.upsert(allowance);
-//	public void upsertUser(@RequestBody OnCallA type){
-//		LOGGER.info(type);
 	}
 	
 	@RequestMapping(value="/delete", method = RequestMethod.DELETE)

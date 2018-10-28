@@ -1,0 +1,26 @@
+<mvc:View
+    controllerName="sap.sf.ar.ui.view.AllowanceDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+			<Page id="aDetailPage"
+				title="test">
+				<headerContent>
+					<Title text="Products ({products>/ProductCollectionStats/Counts/Total})"/>
+				</headerContent>
+				<content>
+					<VBox>
+					
+					</VBox>
+				</content>
+				<footer>
+					<Bar>
+						<contentRight>
+							<Button class="sapUiSmallMarginEnd" id="acceptAll" text="{i18n>acceptAll}"
+								type="Accept"  press="handleAcceptAllPress" />
+							<Button class="sapUiSmallMarginEnd" id="rejectAll" text="{i18n>rejectAll}"
+								type="Reject" press="handleSavePress" />
+						</contentRight>
+					</Bar>
+				</footer>
+			</Page>
+</mvc:View>

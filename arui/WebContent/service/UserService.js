@@ -17,6 +17,20 @@ sap.ui.define([
       });
       return dtd.promise();
     },
+    getUserGroup: function(oData) {
+      var dtd = $.Deferred();
+      bs.asyncReq({
+        url: "/ar/user/getusergroup",
+        type: "GET",
+       	contentType: "application/json",
+       	data: oData
+      }).done(function(data) {
+        dtd.resolve(data);
+      }).fail(function(err) {
+        dtd.reject(err);
+      });
+      return dtd.promise();
+    },
     getUsers: function(oData) {
       var dtd = $.Deferred();
       bs.asyncReq({

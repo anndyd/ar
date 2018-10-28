@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sap.sf.ar.dao.UserDao;
 import com.sap.sf.ar.dto.SessionInfo;
+import com.sap.sf.ar.dto.UserGroup;
 import com.sap.sf.ar.entity.User;
+import com.sap.sf.ar.service.UserService;
 import com.sap.sf.ar.util.EncryptHelper;
 import com.sap.sf.ar.util.SessionHolder;
 
@@ -36,6 +38,9 @@ public class UserController {
     
 	@Autowired
     private UserDao uDao;
+	
+	@Autowired
+	private UserService service;
 
 	@RequestMapping(value="/getSize", method = RequestMethod.GET)
 	@ResponseBody
@@ -52,7 +57,14 @@ public class UserController {
 		List<User> users = uDao.findAll("role,userName", start, max);
 		return users;
 	}
-
+	
+	@RequestMapping(value="/getusergroup", method = RequestMethod.GET)
+	@ResponseBody
+	@Transactional(readOnly = true)
+	public List<UserGroup> getManagedUserInfo(@RequestParam String userName) {
+		return service.getManagedUserInfo(userName);
+	}
+	
 	@RequestMapping(value="/get", method = RequestMethod.GET)
 	@ResponseBody
 	@Transactional(readOnly = true)

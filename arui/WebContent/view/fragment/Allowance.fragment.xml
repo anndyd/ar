@@ -1,0 +1,71 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+		<VBox>
+			<Table id="idOncallAllowancelist" inset="false"
+				backgroundDesign="Solid"
+				growing="true" growingScrollToLoad="true"
+			>
+				<columns>
+					<Column id="iNumber" width="8em">
+						<Text text="{i18n>iNumber}" />
+					</Column>
+					<Column id="empName">
+						<Text text="{i18n>empName}" />
+					</Column>
+					<Column id="atype">
+						<Text text="{i18n>atype}" />
+					</Column>
+					<Column id="customerSite">
+						<Text text="{i18n>customerSite}" />
+					</Column>
+					<Column id="oncallDate">
+						<Text text="{i18n>oncallDate}" />
+					</Column>
+					<Column id="startTime">
+						<Text text="{i18n>startTime}" />
+					</Column>
+					<Column id="endTime">
+						<Text text="{i18n>endTime}" />
+					</Column>
+					<Column id="oncallHours">
+						<Text text="{i18n>oncallHours}" />
+					</Column>
+					<Column id="allowance">
+						<Text text="{i18n>allowance}" />
+					</Column>
+					<Column id="remark">
+						<Text text="{i18n>remark}" />
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem type="Active">
+						<cells>
+							<ObjectIdentifier text="{iNumber}" />
+							<Text text="{empName}" />
+							<Text text="{
+								parts: ['assist>aTypes', 'type'],
+								formatter: 'sap.sf.ar.ui.js.Formatter.getAllowanceType'
+							}" />
+							<Text text="{
+								path: 'customerSite',
+								formatter: 'sap.sf.ar.ui.js.Formatter.yesNo'
+							}" />
+							<Text text="{oncallDate}" />
+							<Text text="{startTime}" />
+							<Text text="{endTime}" />
+							<ObjectNumber number="{oncallHours}"/>
+							<ObjectNumber number="{allowance}"/>
+							<Text text="{remark}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+				<Bar>
+					<contentRight>
+						<Button class="sapUiSmallMarginEnd" id="accept" text="{i18n>accept}"
+							type="Accept"  press="handleAcceptPress" />
+						<Button class="sapUiSmallMarginEnd" id="reject" text="{i18n>reject}"
+							type="Reject" press="handleRejectPress" />
+					</contentRight>
+				</Bar>
+		</VBox>
+</core:FragmentDefinition>

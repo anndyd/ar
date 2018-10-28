@@ -22,11 +22,11 @@
         <m:content>
 		    <NavigationList id="navigationList" 
 		          itemSelect="onSelectItem">
-	            <!--NavigationListItem 
-	            	text="{i18n>atype}" 
+	            <NavigationListItem 
+	            	text="{i18n>managerApprovement}" 
 	            	icon="sap-icon://manager-insight" 
-	            	key="sccmreport" class="menu">
-	            </NavigationListItem-->
+	            	key="manager" class="menu">
+	            </NavigationListItem>
 	            <NavigationListItem 
 	            	text="{i18n>oncallAllowance}" 
 	            	icon="sap-icon://activity-items" 

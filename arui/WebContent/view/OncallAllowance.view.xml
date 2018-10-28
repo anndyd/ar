@@ -23,6 +23,7 @@
 					</Input>
 					<Label text="{i18n>atype}" />
 					<ComboBox selectedKey="{input>type}"
+						change="handleCbChange"
 						items="{ path: 'assist>/types' }">
 						<core:Item key="{assist>id}" text="{assist>name}" />
 						<layoutData>
@@ -101,7 +102,8 @@
 						</layoutData>
 					</Input>
 					<Label text="{i18n>allowance}" />
-					<Input value="{input>otPaymentBase}" type="Text" enabled="false">
+					<Input value="{input>allowance}" type="Text" enabled="false"
+						liveChange="handleInputChange">
 						<layoutData>
 							<l:GridData span="L2 M2 S4" />
 						</layoutData>

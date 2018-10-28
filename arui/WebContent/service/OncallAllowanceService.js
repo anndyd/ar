@@ -10,8 +10,7 @@ sap.ui.define([
       bs.asyncReq({
         url: "/ar/oncall/all",
         type: "GET",
-       	contentType: "application/json",
-       	data: oData
+       	contentType: "application/json"
       }).done(function(data) {
         dtd.resolve(data);
       }).fail(function(err) {
@@ -19,7 +18,63 @@ sap.ui.define([
       });
       return dtd.promise();
     },
-    upsert: function(oData) {
+	getByStatus: function(oData) {
+	    var dtd = $.Deferred();
+	    bs.asyncReq({
+	      url: "/ar/oncall/allbystatus",
+	      type: "GET",
+	      contentType: "application/json",
+	      data: oData
+	    }).done(function(data) {
+	      dtd.resolve(data);
+	    }).fail(function(err) {
+	      dtd.reject(err);
+	    });
+	    return dtd.promise();
+	},
+	getByNameAndStatus: function(oData) {
+	    var dtd = $.Deferred();
+	    bs.asyncReq({
+	      url: "/ar/oncall/allbynameandstatus",
+	      type: "GET",
+	      contentType: "application/json",
+	      data: oData
+	    }).done(function(data) {
+	      dtd.resolve(data);
+	    }).fail(function(err) {
+	      dtd.reject(err);
+	    });
+	    return dtd.promise();
+	},
+	getByCost: function(oData) {
+	    var dtd = $.Deferred();
+	    bs.asyncReq({
+	      url: "/ar/oncall/allbycost",
+	      type: "GET",
+	      contentType: "application/json",
+	      data: oData
+	    }).done(function(data) {
+	      dtd.resolve(data);
+	    }).fail(function(err) {
+	      dtd.reject(err);
+	    });
+	    return dtd.promise();
+	},
+	getByManager: function(oData) {
+	    var dtd = $.Deferred();
+	    bs.asyncReq({
+	      url: "/ar/oncall/allbymanager",
+	      type: "GET",
+	      contentType: "application/json",
+	      data: oData
+	    }).done(function(data) {
+	      dtd.resolve(data);
+	    }).fail(function(err) {
+	      dtd.reject(err);
+	    });
+	    return dtd.promise();
+	},
+     upsert: function(oData) {
         var dtd = $.Deferred();
         bs.asyncReq({
           url: "/ar/oncall/upsert",

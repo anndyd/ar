@@ -3,16 +3,12 @@ package com.sap.sf.ar.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.util.Calendar;
+import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -36,7 +32,6 @@ public class OncallAllowance implements Serializable {
     
     private Boolean customerSite;
     
-//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date oncallDate;
     
@@ -51,11 +46,15 @@ public class OncallAllowance implements Serializable {
     private BigDecimal meal;
     
     private String remark;
+    
+    private Timestamp createdTime;
 
     /**
      * 1- new/need to modify, allow modify/delete
      * 2- sent to manager, read only
      * 3- manager approved, read only
+     * 4- TA approve, read only
+     * 5- rejected, allow modify/delete
      * 6- paid, read only 
      * 
      */
@@ -163,6 +162,14 @@ public class OncallAllowance implements Serializable {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public Timestamp getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Timestamp createdTime) {
+		this.createdTime = createdTime;
 	}
     
 

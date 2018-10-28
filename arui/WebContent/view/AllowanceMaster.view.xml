@@ -1,0 +1,26 @@
+<mvc:View
+    controllerName="sap.sf.ar.ui.view.AllowanceMaster"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+			<Page id="aMasterPage"
+				title="test">
+				<headerContent>
+					<Title text="{i18n>allowanceRequest} ({assist>totalRequest})"/>
+				</headerContent>
+				<subHeader>
+					<Toolbar>
+						<SearchField search="onSearch" />
+					</Toolbar>
+				</subHeader>
+				<content>
+				    <Tree items="{/}"
+				    	mode="SingleSelectMaster"
+					    selectionChange="onSelectionChange"
+					    >
+				      <items>
+				        <StandardTreeItem title="{text}"/>
+				      </items>
+				    </Tree>
+				</content>
+			</Page>
+</mvc:View>

@@ -13,37 +13,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sap.sf.ar.entity.AllowanceType;
-import com.sap.sf.ar.service.AllowanceTypeService;
+import com.sap.sf.ar.entity.RejectReason;
+import com.sap.sf.ar.service.RejectReasonService;
 
 @Controller
-@RequestMapping("atype")
+@RequestMapping("reason")
 @Scope("request")
-public class AllowanceTypeController {
-	private static final Logger LOGGER = Logger.getLogger(AllowanceTypeController.class);
+public class RejectReasonController {
+	private static final Logger LOGGER = Logger.getLogger(RejectReasonController.class);
 
 	@Autowired
-    private AllowanceTypeService service;
+    private RejectReasonService service;
 
 	@RequestMapping(value="/all", method = RequestMethod.GET)
 	@ResponseBody
 	@Transactional(readOnly = true)
-	public List<AllowanceType> getAll(){
-		List<AllowanceType> types = service.getAll();
-		return types;
+	public List<RejectReason> getAll(){
+		List<RejectReason> objs = service.getAll();
+		return objs;
 	}
 	
 	@RequestMapping(value="/upsert", method = RequestMethod.POST)
 	@ResponseBody
 	@Transactional
-	public void upsert(@RequestBody AllowanceType type){
-		service.upsert(type);
-	}
-	
-	@RequestMapping(value="/delete", method = RequestMethod.POST)
-	@ResponseBody
-	@Transactional
-	public void delete(@RequestBody Long id){
-		service.delete(id);
+	public void upsert(@RequestBody RejectReason obj){
+		service.upsert(obj);
 	}
 
 }

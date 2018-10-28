@@ -115,11 +115,19 @@ public abstract class BaseDao<T> {
     public Query createQuery(String sqlString) {
         return em.createQuery(sqlString);
     }
+     
+    public Query createQuery(String sqlString, Class<T> clazz) {
+        return em.createQuery(sqlString, clazz);
+    }
     
     public Query createNativeQuery(String sqlString) {
         return em.createNativeQuery(sqlString);
     }
-    
+     
+    public Query createNativeQuery(String sqlString, Class<T> clazz) {
+        return em.createNativeQuery(sqlString, clazz);
+    }
+   
     @Transactional
     public int execute(Query query) {
     	int rlt;

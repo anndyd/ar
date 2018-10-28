@@ -27,13 +27,21 @@ public class OncallAllowanceService {
     	return dao.findAll();
     }
  
-	public List<OncallAllowance> getByCostCenter(String costCenter, int status) {
+	public List<OncallAllowance> getByRole(String role, String key, int status) {
 		String sql = "select o.* from OncallAllowance o " 
 				+"left join user u on o.inumber=u.username "
-				+"where o.status=?2 and u.costCenter=?1";
+				+"where o.status=?1";
+		if ("2".equals(role)) {
+			sql += " and u.manager=?2";
+		} else if ("3".equals(role) || "4".equals(role)) {
+			sql += " and u.costCenter=?2";
+		} else {
+			sql = "select o.* from OncallAllowance o " 
+				 +"where o.status=?1 and u.username=?2";
+		}
 		Query query = dao.createNativeQuery(sql, OncallAllowance.class)
-					.setParameter(2, status)
-					.setParameter(1, costCenter);
+					.setParameter(1, status)
+					.setParameter(2, key);
 		return query.getResultList();
     }
  

@@ -1,13 +1,21 @@
 sap.ui.define([
     'jquery.sap.global',
     "sap/sf/ar/ui/view/base/BaseController",
+	"sap/sf/ar/ui/service/OncallAllowanceService", 
+	"sap/sf/ar/ui/service/AllowanceTypeService", 
+	"sap/m/MessageToast",
     'sap/ui/model/json/JSONModel'
-  ], function(jQuery, BaseController, JSONModel) {
+  ], function(jQuery, BaseController, OncallAllowanceService, AllowanceTypeService, 
+		  MessageToast, JSONModel) {
   "use strict";
+  var oas = new OncallAllowanceService();
+  var ats = new AllowanceTypeService();
 
   return BaseController.extend("sap.sf.ar.ui.view.AllowanceDetail", {
 
     onInit : function (evt) {
+		var that = this;
+    	var i18n = this.getResourceBundle();
     	var tableData =
     		[{id: "iNumber", key: "iNumber", type: "Identifier"},
 			 {id: "empName", key: "empName", type: "Text"},
@@ -19,13 +27,52 @@ sap.ui.define([
 			 {id: "oncallHours", key: "oncallHours", type: "Number"},
 			 {id: "allowance", key: "allowance", type: "Number"},
 			 {id: "remark", key: "remark", type: "Text"}];
-    	
-    	var i18n = this.getResourceBundle();
 		var oModel = new JSONModel();
-		this.getView().setModel(oModel);
-		this.createFragment(tableData, 2); 
+		var pModel = new JSONModel();
+		var aModel = new JSONModel();
+
+		aModel.setData({
+			aTypes: []
+        });
+		that.getView().setModel(oModel);
+		that.getView().setModel(pModel, "input");
+		that.getView().setModel(aModel, "assist");
+		that.getView().bindElement("input>/");
+		that.getView().bindElement("assist>/");
+    	
+		that.createFragment(tableData, 2); 
+		that.getRouter().getRoute("managerdetail").attachPatternMatched(that._onObjectMatched, that);		
+		that.prepareAssetModel();
     },
 	
+	prepareAssetModel : function() {
+		var that = this;
+		sap.ui.core.BusyIndicator.show();
+		var aModel = this.getView().getModel("assist");
+		ats.getAll().done(function(data) {
+			var ata = [];
+			if (data && data.length > 0) {
+				data.forEach(function(v) {
+					ata[v.id] = v;
+				});
+			}
+			aModel.setData({
+				aTypes: ata
+			});
+			aModel.refresh();
+		});
+	},
+	
+    onViewMatched : function (evt) {
+    	var keyPair = evt.getParameter("arguments").keyPair;
+		sap.ui.core.BusyIndicator.show();
+		var oModel = this.getView().getModel();
+		oas.getAll().done(function(data) {
+			oModel.setData(data);
+			oModel.refresh();
+		});
+    },
+    
 	handleAcceptPress : function (evt) {
 		var oSource = evt;
 	},

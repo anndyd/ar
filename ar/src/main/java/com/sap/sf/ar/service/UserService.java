@@ -60,6 +60,7 @@ public class UserService {
 					ug = new UserGroup();
 					sgs = ug.getSubGroups();
 					ug.setKey(usr.getUserName());
+					ug.setType("manager");
 					ug.setText(usr.getFullName());
 					
 					ugs.add(ug);
@@ -68,6 +69,7 @@ public class UserService {
 					ug = new UserGroup();
 					sgs = ug.getSubGroups();
 					ug.setKey(itm.getCostCenter());
+					ug.setType("costcenter");
 					ug.setText(itm.getCostCenter());
 					
 					ugs.add(ug);
@@ -75,6 +77,11 @@ public class UserService {
 				sgs.add(new KeyPair() {{
 					setKey(itm.getUserName());
 					setText(itm.getFullName());
+					if ("2".equals(usr.getRole())) {
+						setType("employee");
+					} else {
+						setType("manager");
+					}
 				}});
 			}
 		}

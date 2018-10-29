@@ -67,7 +67,7 @@ sap.ui.define([
     	var keyPair = evt.getParameter("arguments").keyPair;
 		sap.ui.core.BusyIndicator.show();
 		var oModel = this.getView().getModel();
-		oas.getAll().done(function(data) {
+		oas.getByRole().done(function(data) {
 			oModel.setData(data);
 			oModel.refresh();
 		});

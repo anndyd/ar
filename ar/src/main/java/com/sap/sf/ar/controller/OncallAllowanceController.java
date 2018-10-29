@@ -49,11 +49,12 @@ public class OncallAllowanceController {
 		return objs;
 	}
 
-	@RequestMapping(value="/allbycost", method = RequestMethod.GET)
+	@RequestMapping(value="/allbyrole", method = RequestMethod.GET)
 	@ResponseBody
 	@Transactional(readOnly = true)
-	public List<OncallAllowance> getAllbyCost(@RequestParam String costCenter, @RequestParam int status){
-		List<OncallAllowance> objs = service.getByCostCenter(costCenter, status);
+	public List<OncallAllowance> getAllbyRole(@RequestParam String role, @RequestParam String key, 
+			@RequestParam int status){
+		List<OncallAllowance> objs = service.getByRole(role, key, status);
 		return objs;
 	}
 

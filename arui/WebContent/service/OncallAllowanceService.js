@@ -46,24 +46,10 @@ sap.ui.define([
 	    });
 	    return dtd.promise();
 	},
-	getByCost: function(oData) {
+	getByRole: function(oData) {
 	    var dtd = $.Deferred();
 	    bs.asyncReq({
-	      url: "/ar/oncall/allbycost",
-	      type: "GET",
-	      contentType: "application/json",
-	      data: oData
-	    }).done(function(data) {
-	      dtd.resolve(data);
-	    }).fail(function(err) {
-	      dtd.reject(err);
-	    });
-	    return dtd.promise();
-	},
-	getByManager: function(oData) {
-	    var dtd = $.Deferred();
-	    bs.asyncReq({
-	      url: "/ar/oncall/allbymanager",
+	      url: "/ar/oncall/allbyrole",
 	      type: "GET",
 	      contentType: "application/json",
 	      data: oData

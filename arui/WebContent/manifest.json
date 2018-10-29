@@ -98,6 +98,11 @@
 				{
 					"pattern": "manager",
 					"name": "manager",
+					"target": ["manager"]
+				},
+				{
+					"pattern": "managerdetail/{param}",
+					"name": "managerdetail",
 					"target": ["manager", "managerdetail"]
 				},
 				{

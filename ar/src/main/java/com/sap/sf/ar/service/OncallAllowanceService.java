@@ -39,6 +39,7 @@ public class OncallAllowanceService {
 			sql = "select o.* from OncallAllowance o " 
 				 +"where o.status=?1 and u.username=?2";
 		}
+		sql += " order by o.iNumber,o.createdTime";
 		Query query = dao.createNativeQuery(sql, OncallAllowance.class)
 					.setParameter(1, status)
 					.setParameter(2, key);

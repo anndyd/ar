@@ -10,13 +10,13 @@ sap.ui.define([
   "use strict";
   var oas = new OncallAllowanceService();
   var ats = new AllowanceTypeService();
-
+  var tableData;
   return BaseController.extend("sap.sf.ar.ui.view.AllowanceDetail", {
 
     onInit : function (evt) {
 		var that = this;
     	var i18n = this.getResourceBundle();
-    	var tableData =
+    	tableData =
     		[{id: "iNumber", key: "iNumber", type: "Identifier"},
 			 {id: "empName", key: "empName", type: "Text"},
 			 {id: "atype", key: "parts: ['assist>aTypes', 'type'], formatter: 'sap.sf.ar.ui.js.Formatter.getAllowanceType'", type: "Text"},
@@ -40,8 +40,7 @@ sap.ui.define([
 		that.getView().bindElement("input>/");
 		that.getView().bindElement("assist>/");
     	
-		that.createFragment(tableData, 2); 
-		that.getRouter().getRoute("managerdetail").attachPatternMatched(that._onObjectMatched, that);		
+		this.getRouter().getRoute("managerdetail").attachPatternMatched(that.onViewMatched, this);		
 		that.prepareAssetModel();
     },
 	
@@ -64,13 +63,41 @@ sap.ui.define([
 	},
 	
     onViewMatched : function (evt) {
-    	var keyPair = evt.getParameter("arguments").keyPair;
-		sap.ui.core.BusyIndicator.show();
-		var oModel = this.getView().getModel();
-		oas.getByRole().done(function(data) {
-			oModel.setData(data);
-			oModel.refresh();
-		});
+    	var that = this;
+    	var key = evt.getParameter("arguments").param;
+    	if (key) {
+			sap.ui.core.BusyIndicator.show();
+			var r = util.sessionInfo.role;
+			var param = {
+				role: r,
+				key: key,
+				status: Number(r)
+			};
+			var oModel = this.getView().getModel();
+			oas.getByRole(param).done(function(data) {
+				var aa = [];
+				var sa = [];
+				
+				if (data && data.length > 0) {
+					var temp = data[0].iNumber;
+					for (var i=0;i<data.length;i++) {
+						var v = data[i];
+						if (temp === v.iNumber) {
+							sa.push(v);
+						} else {
+							aa.push(sa);
+							sa = [];
+							sa.push(v);
+						}
+					}
+					aa.push(sa);
+					that.createFragment(tableData, aa.length); 
+				}
+				
+				oModel.setData(aa);
+				oModel.refresh();
+			});
+    	}
     },
     
 	handleAcceptPress : function (evt) {
@@ -94,7 +121,7 @@ sap.ui.define([
 			    });
 
 			var colItems = new sap.m.ColumnListItem("colItems"+i, {type:"Active"});
-		    oTable.bindAggregation("items","/value",colItems);
+		    oTable.bindAggregation("items","/"+(i-1),colItems);
 			for (var j=0; j<tableData.length; j++) {
 				var itm = tableData[j];
 				this.addCol(itm.id, oTable);

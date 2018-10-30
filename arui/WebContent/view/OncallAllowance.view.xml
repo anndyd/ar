@@ -96,13 +96,13 @@
 						</layoutData>
 					</TimePicker>
 					<Label text="{i18n>oncallHours}" />
-					<Input value="{input>oncallHours}" type="Text" enabled="false">
+					<Input value="{input>oncallHours}" type="Text" textAlign="sap.ui.core.TextAlign.Right" enabled="false">
 						<layoutData>
 							<l:GridData span="L2 M2 S4" />
 						</layoutData>
 					</Input>
 					<Label text="{i18n>allowance}" />
-					<Input value="{input>allowance}" type="Text" enabled="false"
+					<Input value="{input>allowance}" type="Text" textAlign="Right" enabled="false"
 						liveChange="handleInputChange">
 						<layoutData>
 							<l:GridData span="L2 M2 S4" />
@@ -176,8 +176,8 @@
 							<Text text="{oncallDate}" />
 							<Text text="{startTime}" />
 							<Text text="{endTime}" />
-							<ObjectNumber number="{oncallHours}"/>
-							<ObjectNumber number="{allowance}"/>
+							<ObjectNumber number="{oncallHours}" textAlign="sap.ui.core.TextAlign.End"/>
+							<ObjectNumber number="{allowance}" textAlign="right"/>
 							<Text text="{remark}"/>
 						</cells>
 					</ColumnListItem>

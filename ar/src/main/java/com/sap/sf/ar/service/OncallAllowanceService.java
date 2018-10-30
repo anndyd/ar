@@ -37,7 +37,7 @@ public class OncallAllowanceService {
 			sql += " and u.costCenter=?2";
 		} else {
 			sql = "select o.* from OncallAllowance o " 
-				 +"where o.status=?1 and u.username=?2";
+				 +"where o.status=?1 and o.inumber=?2";
 		}
 		sql += " order by o.iNumber,o.createdTime";
 		Query query = dao.createNativeQuery(sql, OncallAllowance.class)

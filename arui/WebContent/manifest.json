@@ -101,7 +101,7 @@
 					"target": ["manager"]
 				},
 				{
-					"pattern": "managerdetail/{param}",
+					"pattern": "managerdetail/{key}/{type}",
 					"name": "managerdetail",
 					"target": ["manager", "managerdetail"]
 				},

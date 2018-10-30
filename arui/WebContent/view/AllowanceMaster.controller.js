@@ -77,7 +77,7 @@ sap.ui.define([
 //			product = productPath.split("/").slice(-1).pop(),
 //			oNextUIState = this.getOwnerComponent().getHelper().getNextUIState(1);
 //
-		this.getRouter().navTo("managerdetail", {param: value.key});
+		this.getRouter().navTo("managerdetail", {key: value.key, type: value.type});
 	},
 	
 	handleAcceptPress : function (evt) {

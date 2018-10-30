@@ -64,12 +64,17 @@ sap.ui.define([
 	
     onViewMatched : function (evt) {
     	var that = this;
-    	var key = evt.getParameter("arguments").param;
-    	if (key) {
+    	var key = evt.getParameter("arguments").key;
+    	var type = evt.getParameter("arguments").type;
+    	if (key && type) {
 			sap.ui.core.BusyIndicator.show();
 			var r = util.sessionInfo.role;
+			var rr = r;
+			if (type === "employee") {
+				rr = "0";
+			}
 			var param = {
-				role: r,
+				role: rr,
 				key: key,
 				status: Number(r)
 			};

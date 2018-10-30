@@ -54,8 +54,8 @@ public class OncallAllowance implements Serializable {
      * 2- sent to manager, read only
      * 3- manager approved, read only
      * 4- TA approve, read only
-     * 5- rejected, allow modify/delete
-     * 6- paid, read only 
+     * 5- paid, read only 
+     * 9- rejected, allow modify/delete
      * 
      */
     private int status;

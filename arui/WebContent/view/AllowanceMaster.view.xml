@@ -3,17 +3,14 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
 			<Page id="aMasterPage"
-				title="test">
-				<headerContent>
-					<Title text="{i18n>allowanceRequest} ({assist>totalRequest})"/>
-				</headerContent>
+				title="{i18n>reviewMaster}">
 				<subHeader>
 					<Toolbar>
 						<SearchField search="onSearch" />
 					</Toolbar>
 				</subHeader>
 				<content>
-				    <Tree items="{/}"
+				    <Tree id="masterTree" items="{/}"
 				    	mode="SingleSelectMaster"
 					    selectionChange="onSelectionChange"
 					    >

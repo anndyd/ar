@@ -3,15 +3,24 @@ sap.ui.define([
     "sap/sf/ar/ui/view/base/BaseController",
 	"sap/sf/ar/ui/service/OncallAllowanceService", 
 	"sap/sf/ar/ui/service/AllowanceTypeService", 
+	"sap/sf/ar/ui/js/Formatter",
+	'sap/m/Button',
+	'sap/m/Dialog',
+	'sap/m/Label',
+	'sap/m/Text',
+	'sap/m/TextArea',
 	"sap/m/MessageToast",
     'sap/ui/model/json/JSONModel'
   ], function(jQuery, BaseController, OncallAllowanceService, AllowanceTypeService, 
+		  Formatter, Button, Dialog, Label, Text, TextArea, 
 		  MessageToast, JSONModel) {
   "use strict";
   var oas = new OncallAllowanceService();
   var ats = new AllowanceTypeService();
   var tableData;
   return BaseController.extend("sap.sf.ar.ui.view.AllowanceDetail", {
+	refreshParam : {},
+	allData : {},
 
     onInit : function (evt) {
 		var that = this;
@@ -73,44 +82,143 @@ sap.ui.define([
 			if (type === "employee") {
 				rr = "0";
 			}
-			var param = {
+			that.refreshParam = {
 				role: rr,
 				key: key,
 				status: Number(r)
 			};
-			var oModel = this.getView().getModel();
-			oas.getByRole(param).done(function(data) {
-				var aa = [];
-				var sa = [];
-				
-				if (data && data.length > 0) {
-					var temp = data[0].iNumber;
-					for (var i=0;i<data.length;i++) {
-						var v = data[i];
-						if (temp === v.iNumber) {
-							sa.push(v);
-						} else {
-							aa.push(sa);
-							sa = [];
-							sa.push(v);
-						}
-					}
-					aa.push(sa);
-					that.createFragment(tableData, aa.length); 
-				}
-				
-				oModel.setData(aa);
-				oModel.refresh();
-			});
+			that.refreshData();
     	}
     },
     
+    refreshData : function() {
+    	var that = this;
+		var oModel = this.getView().getModel();
+		oas.getByRole(this.refreshParam).done(function(data) {
+			that.allData = data;
+			var aa = [];
+			var sa = [];
+			
+			if (data && data.length > 0) {
+				var temp = data[0].iNumber;
+				for (var i=0;i<data.length;i++) {
+					var v = data[i];
+					if (temp === v.iNumber) {
+						sa.push(v);
+					} else {
+						aa.push(sa);
+						sa = [];
+						sa.push(v);
+					}
+				}
+				aa.push(sa);
+				that.createFragment(tableData, aa.length); 
+			}
+			
+			oModel.setData(aa);
+			oModel.refresh();
+		});
+    },
+    
 	handleAcceptPress : function (evt) {
-		var oSource = evt;
+		var data = this.getModel().getData()[evt.getParameter("id").match(/\d+/)[0]-1];
+		this.popAcceptDialog(data, "accept", "acceptQuestion");
+	},
+    
+	handleRejectPress : function (evt) {
+		var data = this.getModel().getData()[evt.getParameter("id").match(/\d+/)[0]-1];
+		this.popRejectDialog(data, "reject", "rejectQuestion");
 	},
 	
 	handleAcceptAllPress : function (evt) {
-		var oSource = evt;
+		this.popAcceptDialog(this.allData, "acceptAll", "acceptAllQuestion");
+	},
+	
+	handleRejectAllPress : function (evt) {
+		this.popRejectDialog(this.allData, "rejectAll", "rejectAllQuestion");
+	},
+	
+	popAcceptDialog : function(data, acceptT, acceptQ) {
+		var i18n = this.getResourceBundle();
+		var that = this;
+		var dialog = new Dialog({
+			title: i18n.getText(acceptT),
+			type: 'Message',
+			content: new Text({ text: i18n.getText(acceptQ) }),
+			beginButton: new Button({
+				text: i18n.getText(acceptT),
+				press: function () {
+					that.updateStatus(data, "accept", "");
+					dialog.close();
+				}
+			}),
+			endButton: new Button({
+				text: i18n.getText("cancel"),
+				press: function () {
+					dialog.close();
+				}
+			}),
+			afterClose: function() {
+				dialog.destroy();
+			}
+		});
+
+		dialog.open();
+	},
+	
+	popRejectDialog : function(data, rejectT, rejectQ) {
+		var i18n = this.getResourceBundle();
+		var that = this;
+		var dialog = new Dialog({
+			title: i18n.getText(rejectT),
+			type: 'Message',
+			content: [
+				new Label({ text: i18n.getText(rejectQ), labelFor: 'rejectDialogTextarea'}),
+				new TextArea('rejectDialogTextarea', {
+					width: '100%',
+					placeholder: i18n.getText("rejectPlaceholder")
+				})
+			],
+			beginButton: new Button({
+				text: i18n.getText(rejectT),
+				press: function () {
+					var sText = sap.ui.getCore().byId('rejectDialogTextarea').getValue();
+					that.updateStatus(data, "reject", sText);
+					dialog.close();
+				}
+			}),
+			endButton: new Button({
+				text: i18n.getText("cancel"),
+				press: function () {
+					dialog.close();
+				}
+			}),
+			afterClose: function() {
+				dialog.destroy();
+			}
+		});
+
+		dialog.open();
+	},
+	
+	updateStatus : function (data, action, msg) {
+		var that = this;
+		var param = {
+			entities: data,
+			role: util.sessionInfo.role,
+			action: action,
+			msg: msg
+		};
+		oas.update(param).done(function(data) {
+			if (data) {
+				// success, refresh model
+				that.refreshData();
+			} else {
+				// error
+			}
+//			MessageToast.show(that.getResourceBundle().getText(
+//			"updateAllowanceS"));
+		});
 	},
 	
 	createFragment : function (tableData, num) {
@@ -138,12 +246,12 @@ sap.ui.define([
 					text : "{i18n>accept}",
 					type : "Accept"
 				}).addStyleClass("sapUiSmallMarginEnd")
-				.attachPress(this.handleAcceptPress);
+				.attachPress(this.handleAcceptPress, this);
 			var oBtn2 = new sap.m.Button("reject"+i, {
 					text : "{i18n>reject}",
-					type : "Reject",
-					press : "handlereRectPress"
-				}).addStyleClass("sapUiSmallMarginEnd");
+					type : "Reject"
+				}).addStyleClass("sapUiSmallMarginEnd")
+				.attachPress(this.handleRejectPress, this);
 			var oBar = new sap.m.Bar();
 			oBar.addStyleClass("sapUiContentPadding");
 			oBar.addContentRight(oBtn1);

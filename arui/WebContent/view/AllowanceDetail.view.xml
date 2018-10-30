@@ -3,7 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
 			<Page id="aDetailPage"
-				title="test">
+				title="{i18n>reviewDetail}">
 				<headerContent>
 					<Title text="Products ({products>/ProductCollectionStats/Counts/Total})"/>
 				</headerContent>
@@ -18,7 +18,7 @@
 							<Button class="sapUiSmallMarginEnd" id="acceptAll" text="{i18n>acceptAll}"
 								type="Accept"  press="handleAcceptAllPress" />
 							<Button class="sapUiSmallMarginEnd" id="rejectAll" text="{i18n>rejectAll}"
-								type="Reject" press="handleSavePress" />
+								type="Reject" press="handleRejectAllPress" />
 						</contentRight>
 					</Bar>
 				</footer>

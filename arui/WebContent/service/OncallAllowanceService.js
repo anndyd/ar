@@ -60,6 +60,18 @@ sap.ui.define([
 	    });
 	    return dtd.promise();
 	},
+     update: function(oData) {
+        var dtd = $.Deferred();
+        bs.asyncReq({
+          url: "/ar/oncall/update",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify(oData)
+        }).done(function(data) {
+          dtd.resolve(data);
+        });
+        return dtd.promise();
+	},
      upsert: function(oData) {
         var dtd = $.Deferred();
         bs.asyncReq({

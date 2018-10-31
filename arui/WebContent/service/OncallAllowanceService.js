@@ -32,10 +32,10 @@ sap.ui.define([
 	    });
 	    return dtd.promise();
 	},
-	getByNameAndStatus: function(oData) {
+	getByiNumberAndStatus: function(oData) {
 	    var dtd = $.Deferred();
 	    bs.asyncReq({
-	      url: "/ar/oncall/allbynameandstatus",
+	      url: "/ar/oncall/allbyinumberandstatus",
 	      type: "GET",
 	      contentType: "application/json",
 	      data: oData

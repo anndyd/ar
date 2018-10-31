@@ -42,11 +42,11 @@ public class OncallAllowanceController {
 		return objs;
 	}
 
-	@RequestMapping(value="/allbynameandstatus", method = RequestMethod.GET)
+	@RequestMapping(value="/allbyinumberandstatus", method = RequestMethod.GET)
 	@ResponseBody
 	@Transactional(readOnly = true)
-	public List<OncallAllowance> findAll(@RequestParam String iNumber, @RequestParam int status){
-		List<OncallAllowance> objs = service.getByUsernameAndStatus(iNumber, status);
+	public List<OncallAllowance> findAll(@RequestParam String iNumber, @RequestParam String status){
+		List<OncallAllowance> objs = service.getByiNumberAndStatus(iNumber, status);
 		return objs;
 	}
 

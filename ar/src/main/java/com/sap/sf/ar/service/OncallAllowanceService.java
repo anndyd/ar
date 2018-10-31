@@ -67,13 +67,12 @@ public class OncallAllowanceService {
                 .setParameter(1, status).getResultList();
     }
   
-	public List<OncallAllowance> getByUsernameAndStatus(String userName, int status) {
+	public List<OncallAllowance> getByiNumberAndStatus(String iNumber, String status) {
 		String sql = "select o.* from OncallAllowance o " 
-					+"left join user u on o.inumber=u.username "
-					+"where o.status=?1 and u.username=?2";
+					+"where o.status in (?1) and o.inumber=?2";
 		Query query = dao.createNativeQuery(sql, OncallAllowance.class)
 					.setParameter(1, status)
-					.setParameter(2, userName);
+					.setParameter(2, iNumber);
 		return query.getResultList();
     }
   
@@ -83,6 +82,9 @@ public class OncallAllowanceService {
    
     public int update(ReviewRequest req) {
     	List<OncallAllowance> itms = req.getAllowances();
+    	if (null == itms) {
+    		return 0;
+    	}
     	itms.forEach(itm->{
     		itm.setStatus("accept".equals(req.getAction()) ? itm.getStatus() + 1 : 9);
     		dao.merge(itm);

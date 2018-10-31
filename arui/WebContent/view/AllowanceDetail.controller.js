@@ -204,7 +204,7 @@ sap.ui.define([
 	updateStatus : function (data, action, msg) {
 		var that = this;
 		var param = {
-			entities: data,
+			allowances: data,
 			role: util.sessionInfo.role,
 			action: action,
 			message: msg

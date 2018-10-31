@@ -82,7 +82,11 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		refreshTable : function() {
 			sap.ui.core.BusyIndicator.show();
 			var oModel = this.getView().getModel();
-			oas.getAll().done(function(data) {
+			var param = {
+				iNumber: util.sessionInfo.currentUser,
+				status: "1,9"
+			};
+			oas.getByiNumberAndStatus(param).done(function(data) {
 				oModel.setData(data);
 				oModel.refresh();
 			});

@@ -114,6 +114,12 @@
 							<l:GridData span="L2 M2 S4" />
 						</layoutData>
 					</Input>
+					<Label text="{i18n>rejectReason}" />
+					<TextArea value="{input>reason}" rows="2">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</TextArea>
 
 				</f:content>
 			</f:SimpleForm>
@@ -156,6 +162,9 @@
 					<Column id="allowance">
 						<Text text="{i18n>allowance}" />
 					</Column>
+					<Column id="status">
+						<Text text="{i18n>status}" />
+					</Column>
 					<Column id="remark">
 						<Text text="{i18n>remark}" />
 					</Column>
@@ -178,6 +187,10 @@
 							<Text text="{endTime}" />
 							<ObjectNumber number="{oncallHours}" textAlign="sap.ui.core.TextAlign.End"/>
 							<ObjectNumber number="{allowance}" textAlign="right"/>
+							<Text text="{
+								parts: ['assist>statuses', 'status'],
+								formatter: 'sap.sf.ar.ui.js.Formatter.getStatus'
+							}" />
 							<Text text="{remark}"/>
 						</cells>
 					</ColumnListItem>
@@ -187,8 +200,10 @@
 			<footer>
 				<Bar>
 					<contentRight>
+						<Button class="sapUiSmallMarginEnd" id="add" text="{i18n>sendToManager}"
+							type="Accept"  press="handleSendPress" />
 						<Button class="sapUiSmallMarginEnd" id="add" text="{i18n>add}"
-							type="Accept"  press="handleAddPress" />
+							type="Normal"  press="handleAddPress" />
 						<Button class="sapUiSmallMarginEnd" id="save" text="{i18n>save}"
 							type="Emphasized" press="handleSavePress" />
 					</contentRight>

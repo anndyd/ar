@@ -16,25 +16,13 @@ public class RejectReason implements Serializable {
 	 */
 	private static final long serialVersionUID = -6780312434987456700L;
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     private String iNumber;
-
+    @Id
     private Long allowanceId;
     
     private String reason;
     
     private Timestamp createTime;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getiNumber() {
 		return iNumber;

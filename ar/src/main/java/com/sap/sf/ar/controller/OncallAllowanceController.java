@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sap.sf.ar.dto.ReviewRequest;
 import com.sap.sf.ar.entity.OncallAllowance;
 import com.sap.sf.ar.service.OncallAllowanceService;
 
@@ -71,6 +72,13 @@ public class OncallAllowanceController {
 	@Transactional
 	public void upsert(@RequestBody OncallAllowance allowance){
 		service.upsert(allowance);
+	}
+	
+	@RequestMapping(value="/update", method = RequestMethod.POST)
+	@ResponseBody
+	@Transactional
+	public void update(@RequestBody ReviewRequest req){
+		service.update(req);
 	}
 	
 	@RequestMapping(value="/delete", method = RequestMethod.DELETE)

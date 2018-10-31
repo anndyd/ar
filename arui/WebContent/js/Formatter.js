@@ -28,6 +28,13 @@ sap.ui.define([
 				return "None";
 			}
 		},
+		getStatus : function (types, type) {
+			if (types && type) {
+				return types[type];
+			} else {
+				return "";
+			}
+		},
 		getAllowanceType : function (types, type) {
 			if (types && type) {
 				return types[type].name;

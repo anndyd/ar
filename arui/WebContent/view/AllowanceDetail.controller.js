@@ -207,7 +207,7 @@ sap.ui.define([
 			entities: data,
 			role: util.sessionInfo.role,
 			action: action,
-			msg: msg
+			message: msg
 		};
 		oas.update(param).done(function(data) {
 			if (data) {

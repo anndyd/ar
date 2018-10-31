@@ -1,6 +1,7 @@
 package com.sap.sf.ar.service;
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -12,7 +13,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.sap.sf.ar.dao.OncallAllowanceDao;
+import com.sap.sf.ar.dao.RejectReasonDao;
+import com.sap.sf.ar.dto.ReviewRequest;
 import com.sap.sf.ar.entity.OncallAllowance;
+import com.sap.sf.ar.entity.RejectReason;
 
 @SuppressWarnings("unchecked")
 @Service
@@ -22,6 +26,9 @@ public class OncallAllowanceService {
 
     @Autowired
     private OncallAllowanceDao dao;
+
+    @Autowired
+    private RejectReasonDao rDao;
 
     public List<OncallAllowance> getAll() {
     	return dao.findAll();
@@ -70,10 +77,28 @@ public class OncallAllowanceService {
 		return query.getResultList();
     }
   
-    public void upsert(OncallAllowance type) {
-    	dao.merge(type);
+    public void upsert(OncallAllowance obj) {
+    	dao.merge(obj);
     }
-    
+   
+    public int update(ReviewRequest req) {
+    	List<OncallAllowance> itms = req.getAllowances();
+    	itms.forEach(itm->{
+    		itm.setStatus("accept".equals(req.getAction()) ? itm.getStatus() + 1 : 9);
+    		dao.merge(itm);
+    		RejectReason rr = new RejectReason();
+	    	if ("reject".equals(req.getAction())) {
+	    		rr.setAllowanceId(itm.getId());
+	    		rr.setiNumber(itm.getiNumber());
+	    		rr.setReason(req.getMessage());
+	    		rr.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
+	    		rDao.merge(rr);
+	    	}
+    	});
+    	
+    	return 1;
+    }
+   
     public void delete(Long id) {
     	dao.remove(id);
     }

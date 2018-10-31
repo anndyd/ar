@@ -11,7 +11,9 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 	
 	return BaseController.extend("sap.sf.ar.ui.view.OncallAllowance", {
 		onInit : function(oEvent) {
+			var i18n = this.getResourceBundle();
 			var that = this;
+			
 			var oModel = new JSONModel();
 			var pModel = new JSONModel();
 			var aModel = new JSONModel();
@@ -20,7 +22,15 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 				empName : util.sessionInfo.userFullName
 			});
 			aModel.setData({
-				types: []
+				types: [],
+				statues: [
+					i18n.getText("new"),
+					i18n.getText("sentToManager"),
+					i18n.getText("managerApproved"),
+					i18n.getText("taApproved"),
+					i18n.getText("paid"),
+					i18n.getText("reject")
+				]
 	        });
 			that.getView().setModel(oModel);
 			that.getView().setModel(pModel, "input");
@@ -120,6 +130,22 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 							"updateOncallAllowanceS"));
 				}
 			);
+		},
+
+		handleSendPress : function() {
+			var that = this;
+			var data = that.getView().getModel("input").getData();
+			var param = {
+				entities: data,
+				role: util.sessionInfo.role,
+				action: "accept",
+				message: ""
+			};
+			oas.update(param).done(function(data) {
+				that.refreshTable();
+				MessageToast.show(that.getResourceBundle().getText(
+						"sendToManagerS"));
+			});
 		},
 		
 		getAllowance : function() {

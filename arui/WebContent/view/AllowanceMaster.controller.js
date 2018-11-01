@@ -20,9 +20,9 @@ sap.ui.define([
   return BaseController.extend("sap.sf.ar.ui.view.AllowanceMaster", {
 
     onInit : function (evt) {
-        var i18n = this.getResourceBundle();
     	var role = util.sessionInfo.role;
     	var user = util.sessionInfo.currentUser;
+		this.getRouter().getRoute("manager").attachPatternMatched(this.onViewMatched, this);		
     	this.prepareData(user);
     },
     
@@ -33,6 +33,15 @@ sap.ui.define([
 	 		var oModel = new JSONModel(data);
 			that.getView().setModel(oModel);
     	});
+    },
+    
+    onViewMatched : function (evt) {
+    	if (util.sessionInfo.proxied) {
+    		this.getView().byId("idUserName").setText(
+    				this.getResourceBundle().getText("proxyAs") + ": " + util.sessionInfo.userFullName);
+    	} else {
+	    	this.getView().byId("idUserName").setText("");
+    	}
     },
     
 	onSearch: function (oEvent) {

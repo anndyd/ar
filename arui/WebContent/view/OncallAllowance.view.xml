@@ -200,7 +200,7 @@
 			<footer>
 				<Bar>
 					<contentRight>
-						<Button class="sapUiSmallMarginEnd" id="add" text="{i18n>sendToManager}"
+						<Button class="sapUiSmallMarginEnd" text="{i18n>sendToManager}"
 							type="Accept"  press="handleSendPress" />
 						<Button class="sapUiSmallMarginEnd" id="add" text="{i18n>add}"
 							type="Normal"  press="handleAddPress" />

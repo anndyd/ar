@@ -78,7 +78,18 @@
 		                oMyShell
 		            ]
 		        });
-		        login();
+		        //Storage
+		        jQuery.sap.require("jquery.sap.storage");
+		        oStorage = jQuery.sap.storage(jQuery.sap.storage.Type.local);
+		        //Check if there is data into the Storage
+		        var data = oStorage.get("proxyData");
+		        if (data) {
+			        util.sessionInfo = data.sessionInfo;
+			        userName = util.sessionInfo.userDisplayName;
+		        } else {
+		        	login();
+		        }
+		        
 		        if (userName && userName !== "") {
 			        oHomeShell.getUser().mProperties.username = userName;
 			        oHomeShell.placeAt('content');

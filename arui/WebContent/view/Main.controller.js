@@ -10,20 +10,20 @@ sap.ui.define([
     onInit : function (evt) {
     	var i18n = this.getResourceBundle();
 		var tileData = [ 
-// 			{
-// 				"icon" : "manager-insight",
-// 				"title" : i18n.getText("sccmreport"),
-// 				"tileId" : "sccmreport",
-//				"info" : i18n.getText("sccmreporttip")
-// 			},
  			{
- 				"icon" : "activity-items",
+ 				"icon" : "payment-approval",
+ 				"title" : i18n.getText("managerApprovement"),
+ 				"tileId" : "manager",
+				"info" : i18n.getText("managertip")
+ 			},
+ 			{
+ 				"icon" : "expense-report",
  				"title" : i18n.getText("oncallAllowance"),
  				"tileId" : "oncall",
 				"info" : i18n.getText("oncallAllowancetip")
  			},
  			{
- 				"icon" : "activity-individual",
+ 				"icon" : "legend",
  				"title" : i18n.getText("atype"),
  				"tileId" : "atype",
 				"info" : i18n.getText("atypetip")

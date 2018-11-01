@@ -8,7 +8,6 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 	var us = new UserService();
 	var w, start = 0, count = 0, page = 0, PAGESIZE = 10, addMode = false;
 	return BaseController.extend("sap.sf.ar.ui.view.User", {
-
 		onInit : function(oEvent) {
 			var that = this;
 			var oModel = new JSONModel();

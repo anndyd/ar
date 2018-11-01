@@ -19,5 +19,12 @@
 				      </items>
 				    </Tree>
 				</content>
+				<footer>
+					<Bar>
+						<contentMiddle>
+							<Label id="idUserName" />
+						</contentMiddle>
+					</Bar>
+				</footer>
 			</Page>
 </mvc:View>

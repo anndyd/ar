@@ -24,17 +24,17 @@
 		          itemSelect="onSelectItem">
 	            <NavigationListItem 
 	            	text="{i18n>managerApprovement}" 
-	            	icon="sap-icon://manager-insight" 
+	            	icon="sap-icon://payment-approval" 
 	            	key="manager" class="menu">
 	            </NavigationListItem>
 	            <NavigationListItem 
 	            	text="{i18n>oncallAllowance}" 
-	            	icon="sap-icon://activity-items" 
+	            	icon="sap-icon://expense-report" 
 	            	key="oncall" class="menu">
 	            </NavigationListItem>
 	            <NavigationListItem 
 	            	text="{i18n>atype}" 
-	            	icon="sap-icon://activity-individual" 
+	            	icon="sap-icon://legend" 
 	            	key="atype" class="menu">
 	            </NavigationListItem>
 	            <!-- NavigationListItem 
@@ -47,5 +47,16 @@
 	            </NavigationListItem>
 		    </NavigationList>
 		</m:content>
+		<m:footer>
+			<m:Bar>
+				<m:contentMiddle>
+					<m:Label id="idUserName" />
+				</m:contentMiddle>
+				<m:contentRight>
+					<m:Button  id="openMenu"
+					   icon="sap-icon://account" press="handlePressOpenMenu" />
+				</m:contentRight>
+			</m:Bar>
+		</m:footer>
 	</m:Page>
 </mvc:View>

@@ -57,7 +57,9 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 				}
 				aModel.setData({
 					types: data,
-					aTypes: ata
+					aTypes: ata,
+					saved: true,
+					edit: false
 				});
 				aModel.refresh();
 				
@@ -181,29 +183,34 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			//Clone the data
 			this.oSupplier = jQuery.extend({}, this.getView().getModel("input").getData());
 			this.toggleButtonsAndView(true);
-
 		},
 
 		handleCancelPress : function () {
-
 			//Restore the data
 			var oModel = this.getView().getModel("input");
 			oModel.setData(this.oSupplier);
 			this.toggleButtonsAndView(false);
-
 		},
 
 		toggleButtonsAndView : function (bEdit) {
-			var oView = this.getView();
-			if (oView.byId("edit").getVisible() === bEdit) {
-				// Show the appropriate action buttons
-				oView.byId("edit").setVisible(!bEdit);
-				oView.byId("save").setVisible(bEdit);
-				oView.byId("cancel").setVisible(bEdit);
-	
+			var aModel = that.getView().getModel("assist");
+			var data = aMode.getData();
+			if (data.edit) {
+				data.edit = !bEdit;
+				data.save = saved;
 				// Set the right form type
 				this.showFormFragment(bEdit ? "AllowanceInput" : "AllowanceDisplay", bEdit);
 			}
+			aModel.setData(data);
+			aModel.refresh();
+//			var oView = this.getView();
+//			if (oView.byId("edit").getVisible() === bEdit) {
+//				// Show the appropriate action buttons
+//				oView.byId("edit").setVisible(!bEdit);
+//				oView.byId("save").setVisible(bEdit);
+//				oView.byId("cancel").setVisible(bEdit);
+//	
+//			}
 		},
 
 		getFormFragment: function (sFragmentName) {

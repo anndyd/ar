@@ -10,6 +10,8 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 	var ats = new AllowanceTypeService();
 	
 	return BaseController.extend("sap.sf.ar.ui.view.OncallAllowance", {
+		formFragments: {},
+		
 		onInit : function(oEvent) {
 			var i18n = this.getResourceBundle();
 			var that = this;
@@ -39,6 +41,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			that.getView().bindElement("assist>/");
 			that.prepareAssetModel();
 			that.refreshTable();
+			this.showFormFragment("AllowanceDisplay");
 		},
 		
 		prepareAssetModel : function() {
@@ -98,13 +101,21 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			var itmCxt = evt.getParameters().listItem.getBindingContext();
 			pModel.setData(itmCxt.getProperty());
 			pModel.refresh();
+			that.getView().byId("edit").setEnabled(true);
 		},
 		
 		handleDelete : function(evt) {
+			var that = this;
 			var sPath = evt.getParameters().listItem.getBindingContext().getPath();
 			var idx = sPath.match(/\d+/g)[0];
-			this.getModel().getData().splice(idx,1);
-			this.getModel().refresh();
+			
+			var oId = that.getModel().getData()[idx].id;
+			oas.deleteItem(oId).done(function (data){
+				that.getModel().getData().splice(idx,1);
+				that.getModel().refresh();
+				MessageToast.show(that.getResourceBundle().getText(
+				"deleteOncallAllowanceS"));
+			});
 		},
 
 		handleCbChange : function(evt) {
@@ -114,14 +125,15 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		handleInputChange : function(evt) {
 			this.getAllowance();
 		},
-		
-		onExit : function() {
-		},
 
 		handleAddPress : function() {
+			this.toggleButtonsAndView(true);
 			var that = this;
 			var pModel = that.getView().getModel("input");
-			pModel.setData({});
+			pModel.setData({
+				iNumber: util.sessionInfo.currentUser,
+				empName: util.sessionInfo.fullName
+			});
 			pModel.refresh();
 		},
 
@@ -130,6 +142,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			oas.upsert(that.getView().getModel("input").getData()).done(
 				function() {
 					that.refreshTable();
+					that.toggleButtonsAndView(false);
 					MessageToast.show(that.getResourceBundle().getText(
 							"updateOncallAllowanceS"));
 				}
@@ -162,6 +175,71 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 					aData.aTypes[pData.type].oncallCustomerSiteYes : aData.aTypes[pData.type].oncallCustomerSiteNo;
 			pData.allowance = tAllowance * pData.oncallHours;
 			pModel.refresh();
+		},
+		
+		handleEditPress : function (evt) {
+			//Clone the data
+			this.oSupplier = jQuery.extend({}, this.getView().getModel("input").getData());
+			this.toggleButtonsAndView(true);
+
+		},
+
+		handleCancelPress : function () {
+
+			//Restore the data
+			var oModel = this.getView().getModel("input");
+			oModel.setData(this.oSupplier);
+			this.toggleButtonsAndView(false);
+
+		},
+
+		toggleButtonsAndView : function (bEdit) {
+			var oView = this.getView();
+			if (oView.byId("edit").getVisible() === bEdit) {
+				// Show the appropriate action buttons
+				oView.byId("edit").setVisible(!bEdit);
+				oView.byId("save").setVisible(bEdit);
+				oView.byId("cancel").setVisible(bEdit);
+	
+				// Set the right form type
+				this.showFormFragment(bEdit ? "AllowanceInput" : "AllowanceDisplay", bEdit);
+			}
+		},
+
+		getFormFragment: function (sFragmentName) {
+			var oFormFragment = this.formFragments[sFragmentName];
+
+			if (oFormFragment) {
+				return oFormFragment;
+			}
+
+			oFormFragment = sap.ui.xmlfragment(this.getView().getId(), "sap.sf.ar.ui.view.fragment." + sFragmentName);
+
+			this.formFragments[sFragmentName] = oFormFragment;
+			return this.formFragments[sFragmentName];
+		},
+
+		showFormFragment : function (sFragmentName, bEdit) {
+			var oForm = this.byId("oncallAllowanceForm2");
+			oForm.setEditable(bEdit);
+			oForm.destroyContent();
+			this.onExit();
+			var oFragment = this.getFormFragment(sFragmentName);
+			oFragment.forEach(function (itm) {
+				oForm.addContent(itm);
+			});
+		},
+
+		onExit : function () {
+			for (var sPropertyName in this.formFragments) {
+				if (!this.formFragments.hasOwnProperty(sPropertyName) || this.formFragments[sPropertyName] == null) {
+					return;
+				}
+
+//				this.formFragments[sPropertyName].destroy();
+				this.formFragments[sPropertyName] = null;
+			}
 		}
+
 	});
 });

@@ -15,37 +15,42 @@ sap.ui.define([
 	users : [],
 
     onInit : function() {
-    	
-    	var that = this;
-    	// attache tab keyup event
-		this.byId("openMenu").attachBrowserEvent("tab keyup", function(oEvent){
-			this._bKeyboard = oEvent.type == "keyup";
-		}, this);
-		// create menu only once
-		if (!this._menu) {
-			this._menu = sap.ui.xmlfragment("sap.sf.ar.ui.view.fragment.Menu", this);
-			this.getView().addDependent(this._menu);
-		}
-		var param = {
-			start: 0,
-			max: 20
-		}
-		us.getUsers(param).done(function(data) {
-			if (data) {
-				data.forEach(function(itm) {
-					that.users[itm.userName] = itm;
-				});
-			}
-		});
-    	if (util.sessionInfo.proxied) {
-    		this.getView().byId("idUserName").setText(
-    				this.getResourceBundle().getText("proxyAs") + ": " + util.sessionInfo.userFullName);
-    	} else {
-	    	this.getView().byId("idUserName").setText("");
-    	}
     	var proxied = util.sessionInfo.proxied ? util.sessionInfo.proxied : false;
-    	this._menu.getItems()[0].setVisible(proxied);
-    	this._menu.getItems()[1].setStartsSection(proxied);
+    	if (util.sessionInfo.role === "1" || proxied) {
+    		this.byId("navigationList").getItems().forEach(function (itm) {
+    			itm.setVisible(true);
+    		});
+	    	var that = this;
+	    	// attache tab keyup event
+			this.byId("openMenu").attachBrowserEvent("tab keyup", function(oEvent){
+				this._bKeyboard = oEvent.type == "keyup";
+			}, this);
+			// create menu only once
+			if (!this._menu) {
+				this._menu = sap.ui.xmlfragment("sap.sf.ar.ui.view.fragment.Menu", this);
+				this.getView().addDependent(this._menu);
+			}
+			var param = {
+				start: 0,
+				max: 20
+			}
+			us.getUsers(param).done(function(data) {
+				if (data) {
+					data.forEach(function(itm) {
+						that.users[itm.userName] = itm;
+					});
+				}
+			});
+	    	if (proxied) {
+	    		this.getView().byId("idUserName").setText(
+	    				this.getResourceBundle().getText("proxyAs") + ": " + util.sessionInfo.userFullName);
+	    	} else {
+		    	this.getView().byId("idUserName").setText("");
+	    	}
+	    	this.byId("openMenu").setVisible(true);
+	    	this._menu.getItems()[0].setVisible(proxied);
+	    	this._menu.getItems()[1].setStartsSection(proxied);
+    	}
     },
     
 	handlePressOpenMenu: function(evt) {

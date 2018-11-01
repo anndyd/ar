@@ -98,7 +98,7 @@
 				{
 					"pattern": "manager",
 					"name": "manager",
-					"target": ["manager"]
+					"target": ["manager", "managerdetail"]
 				},
 				{
 					"pattern": "managerdetail/{key}/{type}",

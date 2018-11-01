@@ -60,7 +60,18 @@ sap.ui.define([
 	    });
 	    return dtd.promise();
 	},
-     update: function(oData) {
+    deleteItem: function(oData) {
+        var dtd = $.Deferred();
+        bs.asyncReq({
+          url: "/ar/oncall/delete",
+          type: "DELETE",
+          data: oData
+        }).done(function(data) {
+          dtd.resolve(data);
+        });
+        return dtd.promise();
+	},
+    update: function(oData) {
         var dtd = $.Deferred();
         bs.asyncReq({
           url: "/ar/oncall/update",
@@ -72,7 +83,7 @@ sap.ui.define([
         });
         return dtd.promise();
 	},
-     upsert: function(oData) {
+    upsert: function(oData) {
         var dtd = $.Deferred();
         bs.asyncReq({
           url: "/ar/oncall/upsert",

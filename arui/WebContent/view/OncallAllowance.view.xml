@@ -4,11 +4,12 @@
 		controllerName="sap.sf.ar.ui.view.OncallAllowance" xmlns:html="http://www.w3.org/1999/xhtml">
 	<Page title="{i18n>oncallAllowanceTitle}">
 		<VBox>
-			<f:SimpleForm id="oncallAllowanceForm" minWidth="1024" backgroundDesign="Solid"
+			<f:SimpleForm id="oncallAllowanceForm1" minWidth="1024" backgroundDesign="Solid"
 				maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
 				labelSpanL="4" labelSpanM="4" emptySpanL="1" emptySpanM="1"
 				columnsL="1" columnsM="1" class="editableForm">
 				<f:content>
+					<core:Title text="" />
 					<Label text="{i18n>iNumber}" />
 					<Input value="{input>iNumber}" type="Text" enabled="false">
 						<layoutData>
@@ -21,17 +22,8 @@
 							<l:GridData span="L2 M2 S4" />
 						</layoutData>
 					</Input>
-					<Label text="{i18n>atype}" />
-					<ComboBox selectedKey="{input>type}"
-						change="handleCbChange"
-						items="{ path: 'assist>/types' }">
-						<core:Item key="{assist>id}" text="{assist>name}" />
-						<layoutData>
-							<l:GridData span="L2 M2 S4" />
-						</layoutData>
-					</ComboBox>
 					<Label text="{i18n>customerSite}" />
-					<CheckBox selected="{input>customerSite}" text="{i18n>yes}">
+					<CheckBox selected="{assist>customerSite}" text="{i18n>yes}">
 						<layoutData>
 							<l:GridData span="L2 M2 S4" />
 						</layoutData>
@@ -41,8 +33,7 @@
 						id="DP1"
 						value="{assist>dateFrom}"
 						valueFormat="yyyy-MM-dd" displayFormat="short"
-						placeholder="{i18n>from}"
-						class="sapUiSmallMarginBottom">
+						placeholder="{i18n>from}">
 						<layoutData>
 							<l:GridData span="L2 M3 S4" />
 						</layoutData>
@@ -51,75 +42,38 @@
 						id="DP2"
 						value="{assist>dateTo}"
 						valueFormat="yyyy-MM-dd" displayFormat="short"
-						placeholder="{i18n>to}"
-						class="sapUiSmallMarginBottom">
+						placeholder="{i18n>to}">
 						<layoutData>
 							<l:GridData span="L2 M3 S4" />
 						</layoutData>
 					</DatePicker>
-					<Button class="sapUiSmallMarginEnd" text="{i18n>generate}" icon="sap-icon://refresh"
+					<Button class="sapUiSmallMarginEnd" text="{i18n>generate}" icon="sap-icon://create"
 						visible="true" press="handleGenerate" width="10em">
 					</Button>
-
-					<Label text="{i18n>oncallDate}" />
-					<DatePicker
-						id="DP3"
-						value="{path: 'input>oncallDate'}"
-						valueFormat="yyyy-MM-dd" displayFormat="short"
-						placeholder=""
-						class="sapUiSmallMarginBottom">
-						<layoutData>
-							<l:GridData span="L2 M3 S4" />
-						</layoutData>
-					</DatePicker>
-					<Label text="{i18n>period}" />
-					<TimePicker
-							id="TP1"
-							value="{path: 'input>startTime'}"
-							change="handleTimeChange"
-							valueFormat="HH:mm"
-							displayFormat="HH:mm"
-							placeholder="{i18n>start}">
-						<layoutData>
-							<l:GridData span="L2 M2 S4" />
-						</layoutData>
-					</TimePicker>
-					<TimePicker
-							id="TP2"
-							value="{path: 'input>endTime'}"
-							change="handleTimeChange"
-							valueFormat="HH:mm"
-							displayFormat="HH:mm"
-							placeholder="{i18n>end}">
-						<layoutData>
-							<l:GridData span="L2 M2 S4" />
-						</layoutData>
-					</TimePicker>
-					<Label text="{i18n>oncallHours}" />
-					<Input value="{input>oncallHours}" type="Text" textAlign="sap.ui.core.TextAlign.Right" enabled="false">
-						<layoutData>
-							<l:GridData span="L2 M2 S4" />
-						</layoutData>
-					</Input>
-					<Label text="{i18n>allowance}" />
-					<Input value="{input>allowance}" type="Text" textAlign="Right" enabled="false"
-						liveChange="handleInputChange">
-						<layoutData>
-							<l:GridData span="L2 M2 S4" />
-						</layoutData>
-					</Input>
-					<Label text="{i18n>remark}" />
-					<Input value="{input>remark}" type="Text">
-						<layoutData>
-							<l:GridData span="L2 M2 S4" />
-						</layoutData>
-					</Input>
-					<Label text="{i18n>rejectReason}" />
-					<TextArea value="{input>reason}" rows="2">
-						<layoutData>
-							<l:GridData span="L2 M2 S4" />
-						</layoutData>
-					</TextArea>
+				</f:content>
+			</f:SimpleForm>
+			<f:SimpleForm id="oncallAllowanceForm3" minWidth="1024" backgroundDesign="Solid"
+				maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
+				labelSpanL="4" labelSpanM="4" emptySpanL="1" emptySpanM="1"
+				columnsL="1" columnsM="1" class="editableForm" title="  ">
+				<f:content>
+					<Toolbar ariaLabelledBy="Title3" class="sapUiMediumMarginBeginEnd">
+						<Title id="Title3" text="" level="H5" titleStyle="H5"/>
+						<ToolbarSpacer />
+						<Button id="edit" icon="sap-icon://edit" text="{i18n>edit}" enabled="false" press="handleEditPress"/>
+						<Button id="save" text="{i18n>save}" type="Emphasized" visible="false" press="handleSavePress" />
+						<Button id="cancel" text="{i18n>cancel}" visible="false" press="handleCancelPress" />
+					</Toolbar>
+				
+				</f:content>
+			</f:SimpleForm>
+			<f:SimpleForm id="oncallAllowanceForm2" minWidth="1024" backgroundDesign="Solid"
+				maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
+				labelSpanL="4" labelSpanM="4" emptySpanL="1" emptySpanM="1"
+				columnsL="2" columnsM="1" class="editableForm"
+				singleContainerFullSize="false"
+				>
+				<f:content>
 
 				</f:content>
 			</f:SimpleForm>
@@ -202,10 +156,10 @@
 					<contentRight>
 						<Button class="sapUiSmallMarginEnd" text="{i18n>sendToManager}"
 							type="Accept"  press="handleSendPress" />
-						<Button class="sapUiSmallMarginEnd" id="add" text="{i18n>add}"
-							type="Normal"  press="handleAddPress" />
-						<Button class="sapUiSmallMarginEnd" id="save" text="{i18n>save}"
-							type="Emphasized" press="handleSavePress" />
+						<Button class="sapUiSmallMarginEnd" text="{i18n>add}"
+							type="Emphasized"  press="handleAddPress" />
+						<!--Button id="saveAll" class="sapUiSmallMarginEnd" text="{i18n>processDelete}"
+							type="Emphasized" enabled="false" press="handleSaveAllPress" /-->
 					</contentRight>
 				</Bar>
 			</footer>

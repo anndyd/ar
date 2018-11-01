@@ -1,0 +1,67 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+					<core:Title id="titlea1" text="" />
+					<Label text="{i18n>atype}" />
+					<Text text="{
+								parts: ['assist>aTypes', 'input>type'],
+								formatter: 'sap.sf.ar.ui.js.Formatter.getAllowanceType'
+							}" >
+						<layoutData>
+							<l:GridData span="L4 M4 S8" />
+						</layoutData>
+					</Text>
+					<Label text="{i18n>customerSite}" />
+					<Text text="{
+								path: 'input>customerSite',
+								formatter: 'sap.sf.ar.ui.js.Formatter.yesNo'
+							}" >
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Text>
+					<Label text="{i18n>oncallDate}" />
+					<Text text="{input>oncallDate}" >
+						<layoutData>
+							<l:GridData span="L4 M4 S8" />
+						</layoutData>
+					</Text>
+					<Label text="{i18n>rejectReason}" />
+					<Text text="{input>reason}">
+						<layoutData>
+							<l:GridData span="L8 M8 S8" />
+						</layoutData>
+					</Text>
+					<core:Title id="titlea2" text="" />
+					<Label text="{i18n>period}" />
+					<Text text="{input>startTime}" >
+						<layoutData>
+							<l:GridData span="L4 M4 S4" />
+						</layoutData>
+					</Text>
+					<Text text="{input>endTime}" >
+						<layoutData>
+							<l:GridData span="L4 M4 S4" />
+						</layoutData>
+					</Text>
+					<Label text="{i18n>oncallHours}" />
+					<ObjectNumber number="{oncallHours}" textAlign="sap.ui.core.TextAlign.End">
+						<layoutData>
+							<l:GridData span="L4 M4 S8" />
+						</layoutData>
+					</ObjectNumber>
+					<Label text="{i18n>allowance}" />
+					<ObjectNumber number="{input>allowance}" textAlign="right">
+						<layoutData>
+							<l:GridData span="L4 M4 S8" />
+						</layoutData>
+					</ObjectNumber>
+					<Label text="{i18n>remark}" />
+					<Text text="{input>remark}">
+						<layoutData>
+							<l:GridData span="L8 M8 S8" />
+						</layoutData>
+					</Text>
+</core:FragmentDefinition>

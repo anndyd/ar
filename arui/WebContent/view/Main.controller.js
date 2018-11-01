@@ -21,19 +21,19 @@ sap.ui.define([
  				"title" : i18n.getText("oncallAllowance"),
  				"tileId" : "oncall",
 				"info" : i18n.getText("oncallAllowancetip")
- 			},
- 			{
- 				"icon" : "legend",
- 				"title" : i18n.getText("atype"),
- 				"tileId" : "atype",
-				"info" : i18n.getText("atypetip")
- 			}
+// 			},
+// 			{
+// 				"icon" : "legend",
+// 				"title" : i18n.getText("atype"),
+// 				"tileId" : "atype",
+//				"info" : i18n.getText("atypetip")
+// 			}
 //		    {
 //				"icon" : "upload",
 //				"title" : i18n.getText("upload"),
 //				"tileId" : "upload",
 //				"info" : i18n.getText("uploadtip")
-// 			}
+ 			}
         ];
 		var oModel = new JSONModel();
 		oModel.setData(tileData);

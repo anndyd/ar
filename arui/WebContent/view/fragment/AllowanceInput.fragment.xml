@@ -1,0 +1,81 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+					<core:Title id="title1" text="" />
+					<Label text="{i18n>atype}" />
+					<ComboBox selectedKey="{input>type}"
+						change="handleCbChange"
+						items="{ path: 'assist>/types' }">
+						<core:Item key="{assist>id}" text="{assist>name}" />
+						<layoutData>
+							<l:GridData span="L4 M4 S8" />
+						</layoutData>
+					</ComboBox>
+					<Label text="{i18n>customerSite}" />
+					<CheckBox selected="{input>customerSite}" text="{i18n>yes}">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</CheckBox>
+					<Label text="{i18n>oncallDate}" />
+					<DatePicker
+						id="DP3"
+						value="{path: 'input>oncallDate'}"
+						valueFormat="yyyy-MM-dd" displayFormat="short"
+						placeholder="">
+						<layoutData>
+							<l:GridData span="L4 M4 S8" />
+						</layoutData>
+					</DatePicker>
+					<Label text="{i18n>rejectReason}" />
+					<TextArea value="{input>reason}" rows="2" enabled="false">
+						<layoutData>
+							<l:GridData span="L8 M8 S8" />
+						</layoutData>
+					</TextArea>
+					<core:Title id="title2" text="" />
+					<Label text="{i18n>period}" />
+					<TimePicker
+							id="TP1"
+							value="{path: 'input>startTime'}"
+							change="handleTimeChange"
+							valueFormat="HH:mm"
+							displayFormat="HH:mm"
+							placeholder="{i18n>start}">
+						<layoutData>
+							<l:GridData span="L4 M4 S4" />
+						</layoutData>
+					</TimePicker>
+					<TimePicker
+							id="TP2"
+							value="{path: 'input>endTime'}"
+							change="handleTimeChange"
+							valueFormat="HH:mm"
+							displayFormat="HH:mm"
+							placeholder="{i18n>end}">
+						<layoutData>
+							<l:GridData span="L4 M4 S4" />
+						</layoutData>
+					</TimePicker>
+					<Label text="{i18n>oncallHours}" />
+					<Input value="{input>oncallHours}" type="Text" textAlign="sap.ui.core.TextAlign.Right" enabled="false">
+						<layoutData>
+							<l:GridData span="L4 M4 S8" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>allowance}" />
+					<Input value="{input>allowance}" type="Text" textAlign="Right" enabled="false"
+						liveChange="handleInputChange">
+						<layoutData>
+							<l:GridData span="L4 M4 S8" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>remark}" />
+					<Input value="{input>remark}" type="Text">
+						<layoutData>
+							<l:GridData span="L8 M8 S8" />
+						</layoutData>
+					</Input>
+</core:FragmentDefinition>

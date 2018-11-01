@@ -33,6 +33,7 @@
 	            	key="oncall" class="menu">
 	            </NavigationListItem>
 	            <NavigationListItem 
+	            	visible="false"
 	            	text="{i18n>atype}" 
 	            	icon="sap-icon://legend" 
 	            	key="atype" class="menu">
@@ -42,18 +43,19 @@
 	            		icon="sap-icon://upload" key="upload">
 	            </NavigationListItem-->
 	            <NavigationListItem 
-	            		text="{i18n>userTitle}"
-	            		icon="sap-icon://user-settings" key="user">
+	            	visible="false"
+            		text="{i18n>userTitle}"
+            		icon="sap-icon://user-settings" key="user">
 	            </NavigationListItem>
 		    </NavigationList>
 		</m:content>
 		<m:footer>
 			<m:Bar>
 				<m:contentMiddle>
-					<m:Label id="idUserName" />
+					<m:Label id="idUserName" visible="false"/>
 				</m:contentMiddle>
 				<m:contentRight>
-					<m:Button  id="openMenu"
+					<m:Button  id="openMenu" visible="false"
 					   icon="sap-icon://account" press="handlePressOpenMenu" />
 				</m:contentRight>
 			</m:Bar>

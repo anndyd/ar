@@ -193,11 +193,11 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		},
 
 		toggleButtonsAndView : function (bEdit) {
-			var aModel = that.getView().getModel("assist");
-			var data = aMode.getData();
-			if (data.edit) {
-				data.edit = !bEdit;
-				data.save = saved;
+			var aModel = this.getView().getModel("assist");
+			var data = aModel.getData();
+			if (data.saved === bEdit) {
+				data.edit = bEdit;
+				data.saved =!bEdit;
 				// Set the right form type
 				this.showFormFragment(bEdit ? "AllowanceInput" : "AllowanceDisplay", bEdit);
 			}

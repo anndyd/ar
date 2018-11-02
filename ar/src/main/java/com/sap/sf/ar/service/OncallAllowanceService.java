@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.sap.sf.ar.dao.OncallAllowanceDao;
 import com.sap.sf.ar.dao.RejectReasonDao;
+import com.sap.sf.ar.dto.MailContent;
 import com.sap.sf.ar.dto.ReviewRequest;
 import com.sap.sf.ar.entity.OncallAllowance;
 import com.sap.sf.ar.entity.RejectReason;
@@ -82,7 +83,7 @@ public class OncallAllowanceService {
    
     public int update(ReviewRequest req) {
     	List<OncallAllowance> itms = req.getAllowances();
-    	if (null == itms) {
+    	if (null == itms || itms.size() < 1) {
     		return 0;
     	}
     	itms.forEach(itm->{
@@ -97,11 +98,37 @@ public class OncallAllowanceService {
 	    		rDao.merge(rr);
 	    	}
     	});
+    	sendNoteMail(req);
     	
     	return 1;
     }
    
     public void delete(Long id) {
     	dao.remove(id);
+    }
+    
+    private void sendNoteMail(ReviewRequest req) {
+    	MailContent info = new MailContent();
+    	String fileName = "";
+    	List<OncallAllowance> itms = req.getAllowances();
+    	OncallAllowance itm = itms.get(0);
+    	if ("reject".equals(req.getAction())) {
+    		// to employee
+    		info.setReceiver(itm.getiNumber());
+    		info.setApprover(req.getSender());
+    		info.setReason(req.getMessage());
+    		fileName = "rejected-request-template.html";
+    	} else if (itm.getStatus() == 1) {
+    		// to manager
+    		info.setReceiver(itm.getiNumber());
+    		fileName = "approval-request-template.html";
+    	}
+    	
+    	info.setLink("https://pekitwin2008vm.pek.sap.corp:1443/arui/#/oncall");
+    	info.setItems(itms);
+    	
+    	SendMail sm = new SendMail();
+    	sm.sendNoticeEmail(info, null, null, fileName);
+    	
     }
 }

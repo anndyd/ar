@@ -134,7 +134,8 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			var pModel = that.getView().getModel("input");
 			pModel.setData({
 				iNumber: util.sessionInfo.currentUser,
-				empName: util.sessionInfo.fullName
+				empName: util.sessionInfo.fullName,
+				status: 1
 			});
 			pModel.refresh();
 		},
@@ -155,8 +156,9 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			var that = this;
 			var data = that.getView().getModel("input").getData();
 			var param = {
-				entities: data,
+				allowances: data,
 				role: util.sessionInfo.role,
+				sender: util.sessionInfo.fullName,
 				action: "accept",
 				message: ""
 			};

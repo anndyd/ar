@@ -35,7 +35,7 @@ public class SendMail {
 	private static final Logger LOGGER = Logger.getLogger(SendMail.class);
 	private static String templatePath = "C:/template/";
 	
-    public void sendPickedEmail(MailContent info, List<String> cc, List<String> admins, String fileName) {
+    public void sendNoticeEmail(MailContent info, List<String> cc, List<String> admins, String fileName) {
         String sender = "system@exchange.sap.corp";
         String receiver = "%s@exchange.sap.corp";
         Properties props = new Properties();
@@ -143,6 +143,7 @@ public class SendMail {
         BufferedReader reader = null;
         StringBuilder builder;
         List<OncallAllowance> infoItems = info.getItems();
+        templatePath = this.getClass().getResource("/").getPath();
         String fullFileName = templatePath + fileName;
         reader = new BufferedReader(new FileReader(fullFileName));
         builder = new StringBuilder();

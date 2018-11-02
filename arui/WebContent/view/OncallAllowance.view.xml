@@ -55,7 +55,7 @@
 			<f:SimpleForm id="oncallAllowanceForm3" minWidth="1024" backgroundDesign="Solid"
 				maxContainerCols="2" editable="true" layout="ResponsiveGridLayout"
 				labelSpanL="4" labelSpanM="4" emptySpanL="1" emptySpanM="1"
-				columnsL="1" columnsM="1" class="editableForm" title="  ">
+				columnsL="1" columnsM="1" class="editableForm" title=" ">
 				<f:content>
 					<Toolbar ariaLabelledBy="Title3" class="sapUiMediumMarginBeginEnd">
 						<Title id="Title3" text="" level="H5" titleStyle="H5"/>

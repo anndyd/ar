@@ -7,6 +7,7 @@ import com.sap.sf.ar.entity.OncallAllowance;
 
 public class ReviewRequest {
 	private List<OncallAllowance> allowances;
+	private String sender;
 	private String role;
 	private String action;
 	private String message;
@@ -15,6 +16,12 @@ public class ReviewRequest {
 	}
 	public void setAllowances(List<OncallAllowance> allowances) {
 		this.allowances = allowances;
+	}
+	public String getSender() {
+		return sender;
+	}
+	public void setSender(String sender) {
+		this.sender = sender;
 	}
 	public String getRole() {
 		return role;

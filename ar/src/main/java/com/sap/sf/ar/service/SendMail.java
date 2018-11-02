@@ -143,7 +143,7 @@ public class SendMail {
         BufferedReader reader = null;
         StringBuilder builder;
         List<OncallAllowance> infoItems = info.getItems();
-        templatePath = this.getClass().getResource("/").getPath();
+        templatePath = this.getClass().getClassLoader().getResource("META-INF").getPath();
         String fullFileName = templatePath + fileName;
         reader = new BufferedReader(new FileReader(fullFileName));
         builder = new StringBuilder();
@@ -155,7 +155,7 @@ public class SendMail {
         StringBuilder ender = new StringBuilder();
         String line = reader.readLine();
         while (line != null) {
-            if (!isLine && line.contains("<tr>")) {
+            if (!isLine && line.contains("<tr")) {
                 tableLine = new StringBuilder();
                 isLineStart = true;
             } else if (line.contains("@iNumber")) {

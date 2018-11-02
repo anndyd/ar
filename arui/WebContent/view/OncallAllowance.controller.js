@@ -108,6 +108,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		},
 		
 		handleDelete : function(evt) {
+			sap.ui.core.BusyIndicator.show();
 			var that = this;
 			var sPath = evt.getParameters().listItem.getBindingContext().getPath();
 			var idx = sPath.match(/\d+/g)[0];
@@ -154,6 +155,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		},
 
 		handleSendPress : function() {
+			sap.ui.core.BusyIndicator.show();
 			var that = this;
 			var data = that.getView().getModel().getData();
 			var param = {

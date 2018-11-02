@@ -13,7 +13,6 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		formFragments: {},
 		
 		onInit : function(oEvent) {
-			var i18n = this.getResourceBundle();
 			var that = this;
 			
 			var oModel = new JSONModel();
@@ -24,15 +23,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 				empName : util.sessionInfo.userFullName
 			});
 			aModel.setData({
-				types: [],
-				statues: [
-					i18n.getText("new"),
-					i18n.getText("sentToManager"),
-					i18n.getText("managerApproved"),
-					i18n.getText("taApproved"),
-					i18n.getText("paid"),
-					i18n.getText("reject")
-				]
+				types: []
 	        });
 			that.getView().setModel(oModel);
 			that.getView().setModel(pModel, "input");
@@ -45,6 +36,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		},
 		
 		prepareAssetModel : function() {
+			var i18n = this.getResourceBundle();
 			var that = this;
 			sap.ui.core.BusyIndicator.show();
 			var aModel = this.getView().getModel("assist");
@@ -58,6 +50,15 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 				aModel.setData({
 					types: data,
 					aTypes: ata,
+					statuses: ["",
+						i18n.getText("new"),
+						i18n.getText("sentToManager"),
+						i18n.getText("managerApproved"),
+						i18n.getText("taApproved"),
+						i18n.getText("paid"),
+						"","","",
+						i18n.getText("reject")
+					],
 					saved: true,
 					edit: false
 				});
@@ -134,7 +135,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			var pModel = that.getView().getModel("input");
 			pModel.setData({
 				iNumber: util.sessionInfo.currentUser,
-				empName: util.sessionInfo.fullName,
+				empName: util.sessionInfo.userFullName,
 				status: 1
 			});
 			pModel.refresh();
@@ -154,11 +155,11 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 
 		handleSendPress : function() {
 			var that = this;
-			var data = that.getView().getModel("input").getData();
+			var data = that.getView().getModel().getData();
 			var param = {
 				allowances: data,
 				role: util.sessionInfo.role,
-				sender: util.sessionInfo.fullName,
+				sender: util.sessionInfo.userFullName,
 				action: "accept",
 				message: ""
 			};

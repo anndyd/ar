@@ -118,7 +118,7 @@ public class OncallAllowanceService {
     		info.setApprover(req.getSender());
     		info.setReason(req.getMessage());
     		fileName = "rejected-request-template.html";
-    	} else if (itm.getStatus() == 1) {
+    	} else if (itm.getStatus() == 2) {
     		// to manager
     		info.setReceiver(itm.getiNumber());
     		fileName = "approval-request-template.html";

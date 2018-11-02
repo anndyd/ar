@@ -148,7 +148,7 @@ public class SendMail {
         reader = new BufferedReader(new FileReader(fullFileName));
         builder = new StringBuilder();
         StringBuilder header = new StringBuilder();
-        StringBuilder tableLine = null;
+        StringBuilder tableLine = new StringBuilder();
         boolean isLineStart = false;
         boolean isLine = false;
         boolean isLineEnd = false;

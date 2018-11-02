@@ -11,6 +11,7 @@ public class ReviewRequest {
 	private String role;
 	private String action;
 	private String message;
+	
 	public List<OncallAllowance> getAllowances() {
 		return allowances;
 	}

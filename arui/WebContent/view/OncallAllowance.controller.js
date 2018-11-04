@@ -171,7 +171,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			var pModel = that.getView().getModel("input");
 			var pData = evt.getParameters().listItem.getBindingContext().getProperty();
 			rs.getByAid({aid: pData.id}).done(function(data) {
-				pData.reason = data.reason;
+				pData.reason = data[0].reason;
 				pModel.setData(pData);
 				pModel.refresh();
 				that.getView().byId("edit").setEnabled(true);
@@ -215,6 +215,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 
 		handleSavePress : function() {
 			this.saveData(this.getView().getModel("input").getData());
+			this.toggleButtonsAndView(false);
 		},
 
 		saveData : function(data, refresh) {

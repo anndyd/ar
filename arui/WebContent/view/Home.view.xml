@@ -23,6 +23,7 @@
 		    <NavigationList id="navigationList" 
 		          itemSelect="onSelectItem">
 	            <NavigationListItem 
+	            	visible="false"
 	            	text="{i18n>managerApprovement}" 
 	            	icon="sap-icon://payment-approval" 
 	            	key="manager" class="menu">

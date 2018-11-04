@@ -86,13 +86,13 @@
 				<Column id="status">
 					<Text text="{i18n>status}" />
 				</Column>
-		        <Column id="role" width="4em" visible="{input>roleCtl}">
+		        <Column id="role" width="4em">
 		          <Text text="{i18n>role}" />
 		        </Column>
-		        <Column visible="{input>roleCtl}">
+		        <Column>
 		          <Text text="{i18n>manager}" />
 		        </Column>
-		        <Column visible="{input>roleCtl}">
+		        <Column>
 		          <Text text="{i18n>costCenter}" />
 		        </Column>
 			</columns>

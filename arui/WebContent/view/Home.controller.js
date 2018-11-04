@@ -16,10 +16,11 @@ sap.ui.define([
 
     onInit : function() {
     	var proxied = util.sessionInfo.proxied ? util.sessionInfo.proxied : false;
+    	var mainItems = this.byId("navigationList").getItems();
+    	mainItems[0].setVisible(util.sessionInfo.role > "0");
+    	mainItems[2].setVisible(util.sessionInfo.role === "1");
+    	mainItems[3].setVisible(util.sessionInfo.role === "1");
     	if (util.sessionInfo.role === "1" || proxied) {
-    		this.byId("navigationList").getItems().forEach(function (itm) {
-    			itm.setVisible(true);
-    		});
 	    	var that = this;
 	    	// attache tab keyup event
 			this.byId("openMenu").attachBrowserEvent("tab keyup", function(oEvent){
@@ -42,6 +43,7 @@ sap.ui.define([
 				}
 			});
 	    	if (proxied) {
+	    		this.getView().byId("idUserName").setVisible(true);
 	    		this.getView().byId("idUserName").setText(
 	    				this.getResourceBundle().getText("proxyAs") + ": " + util.sessionInfo.userFullName);
 	    	} else {
@@ -80,6 +82,7 @@ sap.ui.define([
 				data.sessionInfo = jQuery.extend(true, {}, util.sessionInfo);
 		        oStorage.put("proxyData", data);
 		        
+		        this.getView().byId("idUserName").setVisible(true);
 		        this.getView().byId("idUserName").setText(
 	    				this.getResourceBundle().getText("proxyAs") + ": " + util.sessionInfo.userFullName);
 			} else {

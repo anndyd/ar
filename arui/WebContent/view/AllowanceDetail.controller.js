@@ -81,6 +81,8 @@ sap.ui.define([
 			var rr = r;
 			if (type === "employee") {
 				rr = "0";
+			} else if (type === "manager") {
+				rr = "2"
 			}
 			that.refreshParam = {
 				role: rr,
@@ -206,18 +208,12 @@ sap.ui.define([
 		var param = {
 			allowances: data,
 			role: util.sessionInfo.role,
+			sender: util.sessionInfo.userFullName,
 			action: action,
 			message: msg
 		};
-		oas.update(param).done(function(data) {
-			if (data) {
-				// success, refresh model
-				that.refreshData();
-			} else {
-				// error
-			}
-//			MessageToast.show(that.getResourceBundle().getText(
-//			"updateAllowanceS"));
+		oas.update(param).done(function() {
+			that.refreshData();
 		});
 	},
 	

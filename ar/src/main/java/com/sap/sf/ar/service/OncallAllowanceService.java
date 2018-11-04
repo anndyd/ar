@@ -14,10 +14,12 @@ import org.springframework.stereotype.Service;
 
 import com.sap.sf.ar.dao.OncallAllowanceDao;
 import com.sap.sf.ar.dao.RejectReasonDao;
+import com.sap.sf.ar.dao.UserDao;
 import com.sap.sf.ar.dto.MailContent;
 import com.sap.sf.ar.dto.ReviewRequest;
 import com.sap.sf.ar.entity.OncallAllowance;
 import com.sap.sf.ar.entity.RejectReason;
+import com.sap.sf.ar.entity.User;
 
 @SuppressWarnings("unchecked")
 @Service
@@ -30,6 +32,9 @@ public class OncallAllowanceService {
 
     @Autowired
     private RejectReasonDao rDao;
+
+    @Autowired
+    private UserDao uDao;
 
     public List<OncallAllowance> getAll() {
     	return dao.findAll();
@@ -86,7 +91,8 @@ public class OncallAllowanceService {
     		return 0;
     	}
     	itms.forEach(itm->{
-    		itm.setStatus("accept".equals(req.getAction()) ? itm.getStatus() + 1 : 9);
+    		int st = itm.getStatus() == 9 ? 1 : itm.getStatus();
+     		itm.setStatus("accept".equals(req.getAction()) ? st + 1 : 9);
     		dao.merge(itm);
     		RejectReason rr = new RejectReason();
 	    	if ("reject".equals(req.getAction())) {
@@ -111,6 +117,7 @@ public class OncallAllowanceService {
     	String fileName = "";
     	List<OncallAllowance> itms = req.getAllowances();
     	OncallAllowance itm = itms.get(0);
+    	User user = uDao.findByName(itm.getiNumber());
     	if ("reject".equals(req.getAction())) {
     		// to employee
     		info.setReceiver(itm.getiNumber());
@@ -119,7 +126,7 @@ public class OncallAllowanceService {
     		fileName = "rejected-request-template.html";
     	} else if (itm.getStatus() == 2) {
     		// to manager
-    		info.setReceiver(itm.getiNumber());
+    		info.setReceiver(user.getManager());
     		fileName = "approval-request-template.html";
     	}
     	

@@ -11,12 +11,6 @@ sap.ui.define([
     	var i18n = this.getResourceBundle();
 		var tileData = [ 
  			{
- 				"icon" : "payment-approval",
- 				"title" : i18n.getText("managerApprovement"),
- 				"tileId" : "manager",
-				"info" : i18n.getText("managertip")
- 			},
- 			{
  				"icon" : "expense-report",
  				"title" : i18n.getText("oncallAllowance"),
  				"tileId" : "oncall",
@@ -36,6 +30,16 @@ sap.ui.define([
  			}
         ];
 		var oModel = new JSONModel();
+		if (util.sessionInfo.role !== "0") {
+			tileData.push(
+	 			{
+	 				"icon" : "payment-approval",
+	 				"title" : i18n.getText("managerApprovement"),
+	 				"tileId" : "manager",
+					"info" : i18n.getText("managertip")
+	 			}
+			);
+		}
 		oModel.setData(tileData);
 		this.getView().setModel(oModel);
     },

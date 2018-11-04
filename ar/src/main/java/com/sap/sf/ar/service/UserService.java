@@ -37,20 +37,18 @@ public class UserService {
 		UserGroup ug = new UserGroup();
     	User usr = dao.findByName(userName);
     	String sql = "";
-    	String names = "";
     	if (usr == null || !("2".equals(usr.getRole()) || "3".equals(usr.getRole()) || "4".equals(usr.getRole()))) {
     		return ugs;
     	}
     	
 		if ("2".equals(usr.getRole())) { // manager
-			sql = "select * from user t where t.manager = ?1 order by t.fullName";
-			names = userName;
+			sql = "select * from user t where t.manager = '" + userName + "' order by t.fullName";
 		} else if ("3".equals(usr.getRole()) || "4".equals(usr.getRole())) { // TA/HR
-			sql = "select t from user t where t.role = '2' and t.costCenter in (?1) order by t.costCenter, t.manager";
-			names = Utils.getSqlInString(usr.getChargedCostCenter().split(","));
+			sql = "select t.* from user t where t.role = '2' and t.costCenter in ("
+				 + Utils.getSqlInString(usr.getChargedCostCenter().split(","))
+				 +") order by t.costCenter, t.manager";
 		}
-		Query query = dao.createNativeQuery(sql, User.class)
-						.setParameter(1, names);
+		Query query = dao.createNativeQuery(sql, User.class);
 		List<User> usrs = query.getResultList();
 		if (usrs != null) {
 			for (int i=0; i<usrs.size(); i++) {

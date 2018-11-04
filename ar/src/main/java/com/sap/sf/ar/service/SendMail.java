@@ -26,6 +26,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.sap.sf.ar.dto.MailContent;
@@ -36,13 +37,15 @@ public class SendMail {
 	private static String templatePath = "C:/template/";
 	
     public void sendNoticeEmail(MailContent info, List<String> cc, List<String> admins, String fileName) {
-        String sender = "system@exchange.sap.corp";
+        if (StringUtils.isBlank(fileName)) {
+        	return;
+        }
+    	String sender = "system@exchange.sap.corp";
         String receiver = "%s@exchange.sap.corp";
         Properties props = new Properties();
         props.put("mail.smtp.host", "mail.sap.corp");
         Session session = Session.getInstance(props, null);
         try {
-            String recId = info.getReceiver();
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(sender));
       
@@ -84,6 +87,8 @@ public class SendMail {
             content = content.replace("@logopath", "cid:sap-logo");
             if (null != info.getItems() && info.getItems().size() > 0) {
                 content = content.replaceAll("@empName", info.getItems().get(0).getEmpName());
+            } else {
+            	content = content.replaceAll("@empName", "Manager");
             }
             content = content.replaceAll("@approver", info.getApprover());
             content = content.replaceAll("@link", info.getLink());
@@ -185,6 +190,8 @@ public class SendMail {
             }
             lineContent = lineContent.replaceAll("@iNumber", infoItems.get(i).getiNumber());
             lineContent = lineContent.replaceAll("@empName", infoItems.get(i).getEmpName());
+            lineContent = lineContent.replaceAll("@oncallDate", infoItems.get(i).getOncallDate());
+            lineContent = lineContent.replaceAll("@oncallHours", infoItems.get(i).getOncallHours().toString());
             builder.append(lineContent);
         }
         builder.append(ender);

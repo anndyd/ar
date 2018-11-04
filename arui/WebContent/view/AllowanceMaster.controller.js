@@ -38,6 +38,7 @@ sap.ui.define([
     onViewMatched : function (evt) {
     	var proxied = util.sessionInfo.proxied ? util.sessionInfo.proxied : false;
     	if (proxied) {
+    		this.getView().byId("idUserName").setVisible(true);
     		this.getView().byId("idUserName").setText(
     				this.getResourceBundle().getText("proxyAs") + ": " + util.sessionInfo.userFullName);
     	} else {

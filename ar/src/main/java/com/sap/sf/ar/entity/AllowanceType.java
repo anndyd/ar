@@ -72,11 +72,11 @@ public class AllowanceType implements Serializable {
 		this.otPaymentMultiplier = otPaymentMultiplier;
 	}
 
-	public BigDecimal getOtPaymentBase() {
+	public String getOtPaymentBase() {
 		return otPaymentBase;
 	}
 
-	public void setOtPaymentBase(BigDecimal otPaymentBase) {
+	public void setOtPaymentBase(String otPaymentBase) {
 		this.otPaymentBase = otPaymentBase;
 	}
 
@@ -104,7 +104,7 @@ public class AllowanceType implements Serializable {
     
     private BigDecimal otPaymentMultiplier;
     
-    private BigDecimal otPaymentBase;
+    private String otPaymentBase;
     
     private String memo;
     

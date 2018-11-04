@@ -19,6 +19,20 @@ sap.ui.define([
       });
       return dtd.promise();
     },
+    getByAid: function(oData) {
+      var dtd = $.Deferred();
+      bs.asyncReq({
+        url: "/ar/reason/getbyaid",
+        type: "GET",
+       	contentType: "application/json",
+       	data: oData
+      }).done(function(data) {
+        dtd.resolve(data);
+      }).fail(function(err) {
+        dtd.reject(err);
+      });
+      return dtd.promise();
+    },
     upsert: function(oData) {
         var dtd = $.Deferred();
         bs.asyncReq({

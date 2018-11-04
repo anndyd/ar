@@ -22,6 +22,14 @@ public class RejectReasonService {
     public List<RejectReason> getAll() {
     	return dao.findAll();
     }
+
+    @SuppressWarnings("unchecked")
+	public List<RejectReason> getByAllowanceId(Long aid) {
+    	String sql = "select o.* from RejectReason o where o.allowanceId = ?1 order by o.id";
+    	return dao.createNativeQuery(sql, RejectReason.class)
+    			.setParameter(1, aid)
+    			.getResultList();
+    }
     
     public void upsert(RejectReason obj) {
     	dao.merge(obj);

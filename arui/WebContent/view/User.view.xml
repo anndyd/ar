@@ -43,6 +43,27 @@
 							<l:GridData span="L2 M2 S4" />
 						</layoutData>
 					</Input>
+					<Label text="{i18n>manager}" />
+					<Input value="{input>manager}" type="Text" visible="{input>roleCtl}"
+						enabled="true" editable="true">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>costCenter}" />
+					<Input value="{input>costCenter}" type="Text" visible="{input>roleCtl}"
+						enabled="true" editable="true">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
+					<Label text="{i18n>chargedCostCenter}" />
+					<Input value="{input>chargedCostCenter}" type="Text" visible="{input>roleCtl}"
+						enabled="true" editable="true">
+						<layoutData>
+							<l:GridData span="L2 M2 S4" />
+						</layoutData>
+					</Input>
 
 				</f:content>
 			</f:SimpleForm>
@@ -65,9 +86,15 @@
 				<Column id="status">
 					<Text text="{i18n>status}" />
 				</Column>
-        <Column id="role" width="4em" visible="{input>roleCtl}">
-          <Text text="{i18n>role}" />
-        </Column>
+		        <Column id="role" width="4em" visible="{input>roleCtl}">
+		          <Text text="{i18n>role}" />
+		        </Column>
+		        <Column visible="{input>roleCtl}">
+		          <Text text="{i18n>manager}" />
+		        </Column>
+		        <Column visible="{input>roleCtl}">
+		          <Text text="{i18n>costCenter}" />
+		        </Column>
 			</columns>
 			<items>
 				<ColumnListItem type="Active">
@@ -79,6 +106,8 @@
 							formatter: 'sap.sf.ar.ui.js.Formatter.userStatus'
 						}" />
 						<Text text="{role}" />
+						<Text text="{manager}" />
+						<Text text="{costCenter}" />
 					</cells>
 				</ColumnListItem>
 			</items>

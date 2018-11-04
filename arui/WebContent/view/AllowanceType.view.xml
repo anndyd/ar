@@ -90,9 +90,6 @@
 					<Column id="otPaymentBase">
 						<Text text="{i18n>otPaymentBase}" />
 					</Column>
-					<Column id="memo">
-						<Text text="{i18n>memo}" />
-					</Column>
 				</columns>
 				<items>
 					<ColumnListItem type="Active">
@@ -104,7 +101,6 @@
 							<ObjectNumber number="{oncallCustomerSiteNo}"/>
 							<ObjectNumber number="{otPaymentMultiplier}"/>
 							<ObjectNumber number="{otPaymentBase}"/>
-							<Text text="{memo}"/>
 						</cells>
 					</ColumnListItem>
 				</items>

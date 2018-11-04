@@ -32,8 +32,7 @@ public class OncallAllowance implements Serializable {
     
     private Boolean customerSite;
     
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date oncallDate;
+    private String oncallDate;
     
     private String startTime;
     
@@ -100,11 +99,11 @@ public class OncallAllowance implements Serializable {
 		this.customerSite = customerSite;
 	}
 
-	public Date getOncallDate() {
+	public String getOncallDate() {
 		return oncallDate;
 	}
 
-	public void setOncallDate(Date oncallDate) {
+	public void setOncallDate(String oncallDate) {
 		this.oncallDate = oncallDate;
 	}
 

@@ -89,6 +89,9 @@
 				delete="handleDelete"
 			>
 				<columns>
+					<Column width="0px">
+						<Text text="" />
+					</Column>
 					<Column id="iNumber" width="8em">
 						<Text text="{i18n>iNumber}" />
 					</Column>
@@ -126,6 +129,7 @@
 				<items>
 					<ColumnListItem type="Active">
 						<cells>
+							<ObjectNumber number="{id}"/>
 							<ObjectIdentifier text="{iNumber}" />
 							<Text text="{empName}" />
 							<Text text="{

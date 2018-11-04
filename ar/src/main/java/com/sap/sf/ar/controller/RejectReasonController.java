@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sap.sf.ar.entity.AllowanceType;
 import com.sap.sf.ar.entity.RejectReason;
 import com.sap.sf.ar.service.RejectReasonService;
 
@@ -30,6 +30,14 @@ public class RejectReasonController {
 	@Transactional(readOnly = true)
 	public List<RejectReason> getAll(){
 		List<RejectReason> objs = service.getAll();
+		return objs;
+	}
+
+	@RequestMapping(value="/getbyaid", method = RequestMethod.GET)
+	@ResponseBody
+	@Transactional(readOnly = true)
+	public List<RejectReason> getByAid(@RequestParam long aid){
+		List<RejectReason> objs = service.getByAllowanceId(aid);
 		return objs;
 	}
 	

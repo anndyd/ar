@@ -2,12 +2,16 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		"sap/sf/ar/ui/view/base/BaseController",
 		"sap/sf/ar/ui/service/OncallAllowanceService", 
 		"sap/sf/ar/ui/service/AllowanceTypeService", 
+		"sap/sf/ar/ui/service/RejectReasonService", 
 		"sap/m/MessageToast",
+		'sap/m/MessageBox',
 		'sap/ui/model/json/JSONModel' ], function(jQuery, Formatter,
-		BaseController, OncallAllowanceService, AllowanceTypeService, MessageToast, JSONModel) {
+		BaseController, OncallAllowanceService, AllowanceTypeService, RejectReasonService,
+		ßMessageToast, MessageBox, JSONModel) {
 	"use strict";
 	var oas = new OncallAllowanceService();
 	var ats = new AllowanceTypeService();
+	var rs = new RejectReasonService();
 	
 	return BaseController.extend("sap.sf.ar.ui.view.OncallAllowance", {
 		formFragments: {},
@@ -68,7 +72,71 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		},
 
 		handleGenerate : function() {
+			var i18n = this.getResourceBundle();
+			var that = this;
+			var aData = that.getView().getModel("assist").getData();
+			if (!aData.dateFrom || aData.dateFrom === "") {
+				MessageBox.alert(i18n.getText("noFromDateQ"), {
+				    title: i18n.getText("noFromDateT")
+				});
+				return;
+			}
+			if (!aData.dateTo || aData.dateTo === "") {
+				MessageBox.alert(i18n.getText("noToDateQ"), {
+				    title: i18n.getText("noToDateT")
+				});
+				return;
+			}
+				
+			var data = this.getView().getModel().getData();
+			if (data && data.length>0) {
+				MessageBox.confirm(i18n.getText("clearDataQ"), {
+				    title: i18n.getText("clearDataT"), 
+				    onClose: function(oAction) {
+				    	if (oAction === MessageBox.Action.OK) {
+				    		that.generateAllowance();
+				    	}
+				    }
+				});
+			} else {
+				this.generateAllowance();
+			}
+		},
+		
+		generateAllowance : function() {
+			var that = this;
+			sap.ui.core.BusyIndicator.show();
+			var oModel = that.getView().getModel();
+			var aData = that.getView().getModel("assist").getData();
+			var types = aData.types;
+			var data = [];
+			var dd = aData.dateFrom;
+			while (dd <= aData.dateTo) {
+				var type = util.getAllowanceTypeByDate(types, dd);
+				type.forEach(function(itm) {
+					var item = {
+						iNumber: util.sessionInfo.currentUser,
+						empName: util.sessionInfo.userFullName,
+						type: itm.id,
+						customerSite: aData.customerSite,
+						oncallDate: dd,
+						startTime: util.oncallAllowances[itm.id].start,
+						endTime: util.oncallAllowances[itm.id].end,
+						oncallHours: util.oncallAllowances[itm.id].hours,
+						allowance: util.oncallAllowances[itm.id].allowance,
+						status: 1
+					};
+					that.saveData(item);
+					data.push(item);
+				});
+				var ddd = new Date(dd);
+				ddd.setDate(ddd.getDate()+1);
+				dd = ddd.toISOString().substring(0, 10);
+			}
+			oModel.setData(data);
+			oModel.refresh();
 			
+			sap.ui.core.BusyIndicator.hide();
 		},
 		
 		handleTimeChange : function(evt) {
@@ -101,10 +169,13 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		onTablePress : function(evt) {
 			var that = this;
 			var pModel = that.getView().getModel("input");
-			var itmCxt = evt.getParameters().listItem.getBindingContext();
-			pModel.setData(itmCxt.getProperty());
-			pModel.refresh();
-			that.getView().byId("edit").setEnabled(true);
+			var pData = evt.getParameters().listItem.getBindingContext().getProperty();
+			rs.getByAid({aid: pData.id}).done(function(data) {
+				pData.reason = data.reason;
+				pModel.setData(pData);
+				pModel.refresh();
+				that.getView().byId("edit").setEnabled(true);
+			});
 		},
 		
 		handleDelete : function(evt) {
@@ -143,13 +214,19 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		},
 
 		handleSavePress : function() {
+			this.saveData(this.getView().getModel("input").getData());
+		},
+
+		saveData : function(data, refresh) {
 			var that = this;
-			oas.upsert(that.getView().getModel("input").getData()).done(
+			oas.upsert(data).done(
 				function() {
-					that.refreshTable();
-					that.toggleButtonsAndView(false);
-					MessageToast.show(that.getResourceBundle().getText(
-							"updateOncallAllowanceS"));
+					if (refresh) {
+						that.refreshTable();
+						that.toggleButtonsAndView(false);
+						MessageToast.show(that.getResourceBundle().getText(
+								"updateOncallAllowanceS"));
+					}
 				}
 			);
 		},

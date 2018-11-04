@@ -60,13 +60,13 @@
 						</layoutData>
 					</TimePicker>
 					<Label text="{i18n>oncallHours}" />
-					<Input value="{input>oncallHours}" type="Text" textAlign="sap.ui.core.TextAlign.Right" enabled="false">
+					<Input value="{input>oncallHours}" type="Text" textAlign="sap.ui.core.TextAlign.Right" enabled="true">
 						<layoutData>
 							<l:GridData span="L4 M4 S8" />
 						</layoutData>
 					</Input>
 					<Label text="{i18n>allowance}" />
-					<Input value="{input>allowance}" type="Text" textAlign="Right" enabled="false"
+					<Input value="{input>allowance}" type="Text" textAlign="Right" enabled="true"
 						liveChange="handleInputChange">
 						<layoutData>
 							<l:GridData span="L4 M4 S8" />

@@ -70,10 +70,9 @@ public class OncallAllowanceService {
   
 	public List<OncallAllowance> getByiNumberAndStatus(String iNumber, String status) {
 		String sql = "select o.* from OncallAllowance o " 
-					+"where o.status in (?1) and o.inumber=?2";
+					+"where o.status in (" + status + ") and o.inumber=?1";
 		Query query = dao.createNativeQuery(sql, OncallAllowance.class)
-					.setParameter(1, status)
-					.setParameter(2, iNumber);
+					.setParameter(1, iNumber);
 		return query.getResultList();
     }
   

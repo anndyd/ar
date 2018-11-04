@@ -7,7 +7,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		'sap/m/MessageBox',
 		'sap/ui/model/json/JSONModel' ], function(jQuery, Formatter,
 		BaseController, OncallAllowanceService, AllowanceTypeService, RejectReasonService,
-		ßMessageToast, MessageBox, JSONModel) {
+		MessageToast, MessageBox, JSONModel) {
 	"use strict";
 	var oas = new OncallAllowanceService();
 	var ats = new AllowanceTypeService();
@@ -193,6 +193,10 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			});
 		},
 
+		handleImportPress : function(evt) {
+			MessageToast.show(this.getResourceBundle().getText("comeSoon"));
+		},
+		
 		handleCbChange : function(evt) {
 			this.getAllowance();
 		},

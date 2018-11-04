@@ -158,6 +158,8 @@
 			<footer>
 				<Bar>
 					<contentRight>
+						<Button class="sapUiSmallMarginEnd" text="{i18n>importFromExcel}"
+							press="handleImportPress" />
 						<Button class="sapUiSmallMarginEnd" text="{i18n>sendToManager}"
 							type="Accept" enabled="{assist>saved}" press="handleSendPress" />
 						<Button class="sapUiSmallMarginEnd" text="{i18n>add}" icon="sap-icon://add"

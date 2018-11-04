@@ -121,6 +121,10 @@ sap.ui.define([
 			oModel.refresh();
 		});
     },
+
+	handleExportPress : function(evt) {
+		MessageToast.show(this.getResourceBundle().getText("comeSoon"));
+	},
     
 	handleAcceptPress : function (evt) {
 		var data = this.getModel().getData()[evt.getParameter("id").match(/\d+/)[0]-1];

@@ -27,7 +27,8 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		onTablePress : function(evt) {
 			var that = this;
 			var pModel = that.getView().getModel("input");
-			var pData = evt.getParameters().listItem.getBindingContext().getProperty();
+			var itmCxt = evt.getParameters().listItem.getBindingContext();
+			var pData = itmCxt.getProperty();
 			
 			pData.roleCtl = util.sessionInfo.role === "1";
 			pData.editCtl = util.sessionInfo.role === "1" || util.sessionInfo.currentUser === itmCxt.getProperty("userName");

@@ -9,6 +9,7 @@ public class MailContent {
 	private String receiver;
 	private String link;
 	private String reason;
+	private String action;
 	private List<OncallAllowance> items;
 	
 	public String getApprover() {
@@ -34,6 +35,12 @@ public class MailContent {
 	}
 	public void setReason(String reason) {
 		this.reason = reason;
+	}
+	public String getAction() {
+		return action;
+	}
+	public void setAction(String action) {
+		this.action = action;
 	}
 	public List<OncallAllowance> getItems() {
 		return items;

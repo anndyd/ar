@@ -21,7 +21,7 @@ public class LoginRequiredInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws IOException {
     	
-    		String loginPage = "/qmui/index.html";
+    		String loginPage = "/arui/index.html";
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute(SessionHolder.USER_ID);
         String usrFullName = (String) session.getAttribute(SessionHolder.USER_FULLNAME);

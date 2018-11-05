@@ -129,7 +129,7 @@ public class OncallAllowanceService {
     		info.setReceiver(user.getManager());
     		fileName = "approval-request-template.html";
     	}
-    	
+    	info.setAction(req.getAction());
     	info.setLink("https://pekitwin2008vm.pek.sap.corp:1443/arui/#/oncall");
     	info.setItems(itms);
     	

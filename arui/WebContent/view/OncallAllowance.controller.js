@@ -150,7 +150,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 				MessageToast.show(that.getResourceBundle().getText(
 				"endTimeMustGreatThenStartTimeErr"));
 			}
-			
+			this.getAllowance();
 		},
 			
 		refreshTable : function() {
@@ -170,12 +170,18 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			var that = this;
 			var pModel = that.getView().getModel("input");
 			var pData = evt.getParameters().listItem.getBindingContext().getProperty();
-			rs.getByAid({aid: pData.id}).done(function(data) {
-				pData.reason = data[0].reason;
+			if (pData && pData.status === 9) {
+				rs.getByAid({aid: pData.id}).done(function(data) {
+					pData.reason = data[0].reason;
+					pModel.setData(pData);
+					pModel.refresh();
+					that.getView().byId("edit").setEnabled(true);
+				});
+			} else {
 				pModel.setData(pData);
 				pModel.refresh();
 				that.getView().byId("edit").setEnabled(true);
-			});
+			}
 		},
 		
 		handleDelete : function(evt) {
@@ -185,7 +191,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			var idx = sPath.match(/\d+/g)[0];
 			
 			var oId = that.getModel().getData()[idx].id;
-			oas.deleteItem(oId).done(function (data){
+			oas.deleteItem({id: oId}).done(function (data){
 				that.getModel().getData().splice(idx,1);
 				that.getModel().refresh();
 				MessageToast.show(that.getResourceBundle().getText(
@@ -218,7 +224,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		},
 
 		handleSavePress : function() {
-			this.saveData(this.getView().getModel("input").getData());
+			this.saveData(this.getView().getModel("input").getData(), true);
 			this.toggleButtonsAndView(false);
 		},
 
@@ -307,7 +313,7 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 				return oFormFragment;
 			}
 
-			oFormFragment = sap.ui.xmlfragment(this.getView().getId(), "sap.sf.ar.ui.view.fragment." + sFragmentName);
+			oFormFragment = sap.ui.xmlfragment(this.getView().getId(), "sap.sf.ar.ui.view.fragment." + sFragmentName, this);
 
 			this.formFragments[sFragmentName] = oFormFragment;
 			return this.formFragments[sFragmentName];

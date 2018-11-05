@@ -85,10 +85,10 @@ public class SendMail {
             
             String content = generateMailContent(info, fileName);
             content = content.replace("@logopath", "cid:sap-logo");
-            if (null != info.getItems() && info.getItems().size() > 0) {
-                content = content.replaceAll("@empName", info.getItems().get(0).getEmpName());
+            if ("reject".equals(info.getAction())) {
+                content = content.replaceAll("@receiver", info.getItems().get(0).getEmpName());
             } else {
-            	content = content.replaceAll("@empName", "Manager");
+            	content = content.replaceAll("@receiver", "Manager");
             }
             content = content.replaceAll("@approver", info.getApprover());
             content = content.replaceAll("@link", info.getLink());

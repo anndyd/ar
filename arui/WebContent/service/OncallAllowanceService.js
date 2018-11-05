@@ -64,7 +64,7 @@ sap.ui.define([
         var dtd = $.Deferred();
         bs.asyncReq({
           url: "/ar/oncall/delete",
-          type: "DELETE",
+          type: "GET",
           data: oData
         }).done(function(data) {
           dtd.resolve(data);

@@ -27,19 +27,12 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 		onTablePress : function(evt) {
 			var that = this;
 			var pModel = that.getView().getModel("input");
-			var itmCxt = evt.getParameters().listItem.getBindingContext();
-			pModel.setData({
-				userName : itmCxt.getProperty("userName"),
-				fullName : itmCxt.getProperty("fullName"),
-				status : itmCxt.getProperty("status"),
-				password : itmCxt.getProperty("password"),
-				role : itmCxt.getProperty("role"),
-				
-				roleCtl : util.sessionInfo.role === "1",
-				editCtl : util.sessionInfo.role === "1" ||
-				util.sessionInfo.currentUser === itmCxt.getProperty("userName"),
-				pwdCtl : util.sessionInfo.currentUser === itmCxt.getProperty("userName")
-			});
+			var pData = evt.getParameters().listItem.getBindingContext().getProperty();
+			
+			pData.roleCtl = util.sessionInfo.role === "1";
+			pData.editCtl = util.sessionInfo.role === "1" || util.sessionInfo.currentUser === itmCxt.getProperty("userName");
+			pData.pwdCtl = util.sessionInfo.currentUser === itmCxt.getProperty("userName");
+			pModel.setData(pData);
 			pModel.refresh();
 
 		},

@@ -71,8 +71,8 @@ public class OncallAllowanceController {
 	@RequestMapping(value="/upsert", method = RequestMethod.POST)
 	@ResponseBody
 	@Transactional
-	public void upsert(@RequestBody OncallAllowance allowance){
-		service.upsert(allowance);
+	public Long upsert(@RequestBody OncallAllowance allowance){
+		return service.upsert(allowance);
 	}
 	
 	@RequestMapping(value="/update", method = RequestMethod.POST)

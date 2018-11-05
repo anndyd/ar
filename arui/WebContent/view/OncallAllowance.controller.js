@@ -109,7 +109,6 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			var oModel = that.getView().getModel();
 			var aData = that.getView().getModel("assist").getData();
 			var types = aData.types;
-			var data = [];
 			var dd = aData.dateFrom;
 			while (dd <= aData.dateTo) {
 				var type = util.getAllowanceTypeByDate(types, dd);
@@ -127,15 +126,11 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 						status: 1
 					};
 					that.saveData(item);
-					data.push(item);
 				});
 				var ddd = new Date(dd);
 				ddd.setDate(ddd.getDate()+1);
 				dd = ddd.toISOString().substring(0, 10);
 			}
-			oModel.setData(data);
-			oModel.refresh();
-			
 			sap.ui.core.BusyIndicator.hide();
 		},
 		
@@ -232,8 +227,8 @@ sap.ui.define([ 'jquery.sap.global', "sap/sf/ar/ui/js/Formatter",
 			var that = this;
 			oas.upsert(data).done(
 				function() {
+					that.refreshTable();
 					if (refresh) {
-						that.refreshTable();
 						that.toggleButtonsAndView(false);
 						MessageToast.show(that.getResourceBundle().getText(
 								"updateOncallAllowanceS"));

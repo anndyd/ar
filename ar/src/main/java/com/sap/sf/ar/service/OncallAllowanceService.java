@@ -81,8 +81,8 @@ public class OncallAllowanceService {
 		return query.getResultList();
     }
   
-    public void upsert(OncallAllowance obj) {
-    	dao.merge(obj);
+    public Long upsert(OncallAllowance obj) {
+    	return dao.merge(obj).getId();
     }
    
     public int update(ReviewRequest req) {
